@@ -1,7 +1,0 @@
-.sidebar-menu li.active > a > .fa-angle-left { transform: rotate(-90deg); }
-.sidebar-menu li.active > .sidebar-submenu { display: block; }
-.sidebar-menu a { text-decoration: none; }
-.sidebar-menu .sidebar-submenu { display: none; list-style: none; }
-.sidebar-menu .sidebar-submenu > li > a { display: block; }
-
-.img-icon{display:inline-block;line-height:1;white-space:nowrap;direction:ltr;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;-webkit-font-feature-settings:'liga';display:inline-block;width:19px;height:19px;margin-right:3px;vertical-align:center;content:'local_atm'}
