@@ -1,0 +1,820 @@
+
+	수정 작업 리스트
+
+1. schema 정보 업데이트
+	- 변경된 정보 add
+	- 기존 정보 ldif backup
+	- ldif 파일의 어트리뷰트명을 변경된 정보로 수정
+	- ldif 업데이트
+	- 변경 전 정보 삭제.
+
+
+2. HRLoad TDI 수정
+
+3. TAM Attribute 업데이트 TDI 수정
+
+4. 퇴사 TDI 수정
+	ASL_DEL_TIM_USER
+	ASL_SYNC_RETIRED_TIM_USER
+
+
+
+
+
+커머셜 개발
+ldapmodify -h 10.209.6.162 -p 1389 -D cn=ldapmaster -w Secure99 -a -c -k -r -f /tmp/schema2.ldif
+ldapmodify -h 10.209.6.162 -p 2389 -D cn=ldapmaster -w Secure99 -a -c -k -r -f /tmp/schema.ldif
+
+카드 개발
+ldapmodify -h 10.211.5.36 -p 1389 -D cn=ldapmaster -w Secure99 -a -c -k -r -f /tmp/schema2.ldif
+ldapmodify -h 10.211.5.36 -p 2389 -D cn=ldapmaster -w Secure99 -a -c -k -r -f /tmp/schema.ldif
+
+캐피탈 개발
+ldapmodify -h 10.210.5.36 -p 1389 -D cn=ldapmaster -w Secure99 -a -c -k -r -f /tmp/schema2.ldif
+ldapmodify -h 10.210.5.36 -p 2389 -D cn=ldapmaster -w Secure99 -a -c -k -r -f /tmp/schema.ldif
+
+
+카드 운영
+ldapmodify -h 10.211.7.237 -p 1389 -D cn=ldapmaster -w Secure99 -a -c -k -r -f /tmp/schema1.ldif
+ldapmodify -h 10.211.7.237 -p 2389 -D cn=ldapmaster -w Secure99 -a -c -k -r -f /tmp/schema.ldif
+
+캐피탈 운영
+ldapmodify -h 10.210.7.237 -p 1389 -D cn=ldapmaster -w Secure99 -a -c -k -r -f /tmp/schema2.ldif
+ldapmodify -h 10.210.7.237 -p 2389 -D cn=ldapmaster -w Secure99 -a -c -k -r -f /tmp/schema.ldif
+
+커머셜 운영
+ldapmodify -h 10.209.7.171 -p 1389 -D cn=ldapmaster -w Secure99 -a -c -k -r -f /tmp/schema2.ldif
+ldapmodify -h 10.209.7.172 -p 1389 -D cn=ldapmaster -w Secure99 -a -c -k -r -f /tmp/schema.ldif
+
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.101
+  NAME 'spUsid'
+  DESC 'USER ID'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.102
+  NAME 'spEmpKncd'
+  DESC 'EMP KNCD'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.103
+  NAME 'spBrnKName'
+  DESC 'Dept Name Korea'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.104
+  NAME 'spBrnEName'
+  DESC 'Dept Name English'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.105
+  NAME 'spBrnocoCd'
+  DESC 'Common Dept Code'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.106
+  NAME 'spPreObrnCd'
+  DESC 'Pre OBRN Code'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.107
+  NAME 'spDtchBrnCd'
+  DESC 'DTCH BRN Code'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.108
+  NAME 'spTarn'
+  DESC 'Tel Num 1'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.109
+  NAME 'spTten'
+  DESC 'Tel Num 2'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.110
+  NAME 'spTgnn'
+  DESC 'Tel Num 3'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.111
+  NAME 'spMidn'
+  DESC 'Phone Num 1'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.112
+  NAME 'spMten'
+  DESC 'Phone Num 2'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.113
+  NAME 'spMgnn'
+  DESC 'Phone Num 3'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.114
+  NAME 'spEmid'
+  DESC 'EMAILID'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.115
+  NAME 'spEdmi'
+  DESC 'EMAILDOMAIN'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.116
+  NAME 'spUserChknCd'
+  DESC 'User Check Code'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.117
+  NAME 'spUserRrno'
+  DESC 'User Serial Num'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.118
+  NAME 'spPosCd'
+  DESC 'Pos Code'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.119
+  NAME 'spPosEngName'
+  DESC 'Pos Name ENG'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.120
+  NAME 'spOcptCd1'
+  DESC 'Capital OCPT Code'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.121
+  NAME 'spOcptCd2'
+  DESC 'Card OCPT Code'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.122
+  NAME 'spDutyCd'
+  DESC 'Duty Code'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.123
+  NAME 'spDutyNameKr'
+  DESC 'Duty Name'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.124
+  NAME 'spDutyNameEng'
+  DESC 'Duty Name ENG'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.125
+  NAME 'spTeamKncd'
+  DESC 'TEAM KNCD'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.126
+  NAME 'spAuhGrd'
+  DESC 'AUH GRD'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.127
+  NAME 'spAuhClpard'
+  DESC 'AUH CL PARD'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.128
+  NAME 'spEcd'
+  DESC 'Enter Date'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.129
+  NAME 'spGoord'
+  DESC 'GOOR Date'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.130
+  NAME 'spRemd'
+  DESC 'Retire Date'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.131
+  NAME 'spBizStopYN'
+  DESC 'BIZ STOP YN'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.132
+  NAME 'spFuncStopYN'
+  DESC 'FUNC STOP YN'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.133
+  NAME 'spTstpYN'
+  DESC 'TSTP YN'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.134
+  NAME 'spBrnStopYN'
+  DESC 'BRN STOP YN'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.135
+  NAME 'spSgond'
+  DESC 'SIGNON Date'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.136
+  NAME 'spSgont'
+  DESC 'SIGNON Time'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.137
+  NAME 'spIPar'
+  DESC 'IP Address'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.138
+  NAME 'spFixdIPar'
+  DESC 'Fixed IP Address'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.139
+  NAME 'spPswdInitYN'
+  DESC 'PWD INIT YN'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.140
+  NAME 'spPswdVldd'
+  DESC 'PWD VALID Date'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.141
+  NAME 'spCgdt'
+  DESC 'Modify Date'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.142
+  NAME 'spCren'
+  DESC 'CREN'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.143
+  NAME 'spOcousid'
+  DESC 'OCO USID'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.144
+  NAME 'spFxan'
+  DESC 'FAX Num 1'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.145
+  NAME 'spFxtn'
+  DESC 'FAX Num 2'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.146
+  NAME 'spFxgn'
+  DESC 'FAX Num 3'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.147
+  NAME 'spEnnm'
+  DESC 'ENG Name'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.148
+  NAME 'spIntegratedCode'
+  DESC 'Integrated Code'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.149
+  NAME 'spIntegratedName'
+  DESC 'Integrated Name'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.150
+  NAME 'spIntegratedNameEng'
+  DESC 'Integrated ENG Name'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.151
+  NAME 'spIntegratedCompCode'
+  DESC 'Integrated Company Code'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.152
+  NAME 'spOrgCd'
+  DESC 'ORG CD'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.153
+  NAME 'spBrnocoYN'
+  DESC 'Common Dept Flag'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.154
+  NAME 'spOpstcoCd'
+  DESC 'Company Code'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.155
+  NAME 'ASSTSQ'
+  DESC 'ASST SQ'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ ) 
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.156
+  NAME 'ITFCID'
+  DESC 'Interface ID'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.157
+  NAME 'spNewUsid'
+  DESC 'New User ID'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.158
+  NAME 'spMasterEmpNoYN'
+  DESC 'MASTER Employee No YN'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.159
+  NAME 'spGrpEcd'
+  DESC 'GRP Enter Date'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.160
+  NAME 'spStatusStartDate'
+  DESC 'hd status start date'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.161
+  NAME 'spStatusEndDate'
+  DESC 'hd status end date'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.162
+  NAME 'spGuid'
+  DESC 'GUID'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.163
+  NAME 'spPositionCd'
+  DESC 'Position Code'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.164
+  NAME 'spDtchBrnKName'
+  DESC 'pDtchBrnKName'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.166
+  NAME 'zgt3sd'
+  DESC 'zgt3sd'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.167
+  NAME 'zgt3ed'
+  DESC 'zgt3ed'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.168
+  NAME 'zgt3rmrk1'
+  DESC 'zgt3rmrk1'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.169
+  NAME 'zgt3rmrk2'
+  DESC 'zgt3rmrk2'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.170
+  NAME 'connectionType'
+  DESC 'connectionType'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.171
+  NAME 'mfChangePwdTime'
+  DESC 'mfChangePwdTime'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
