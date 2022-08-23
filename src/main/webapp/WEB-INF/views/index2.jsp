@@ -8,7 +8,6 @@
 <%@page import="java.util.Base64"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<!-- sdfsdf -->
 <head>
 <!--script src="/nim/resources/contents/js/core.js" type="text/javascript"></script>
 <script src="/nim/resources/contents/js/lopas-pwd.js" type="text/javascript"></script>
