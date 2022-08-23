@@ -15,11 +15,13 @@
 	var chatSeq = '${chatSeq}';
 	var chatTname = '${chatTname}';
 	var chatUserid = '${chatUserid}'
+	var tableName = chatTname+chatUserid
 	console.log(chatSeq);
 	console.log(chatTname);
+	console.log(tableName);
 
 	$(document).ready(function(){
-		var sParam = {"tableName":chatTname}
+		var sParam = {"tableName":tableName}
 		var returnConv = chatAjax('/chatConvSel', sParam, 'post');
 		conData(returnConv);
 
@@ -31,12 +33,11 @@
 				console.log("chat_id >>> : " + chat_id);
 				console.log("chat_conv >>> : " + chat_conv);
 
-				var param = {"tableName":chatTname, "hostid":chat_id, "hostcs":chat_conv};
+				var param = {"tableName":tableName, "hostid":chat_id, "hostcs":chat_conv};
 				var convResult = chatAjax('/chatConvIn', param, 'post');
 				console.log(convResult);
 
 				if (convResult) {
-					var sParam = {"tableName":chatTname}
 					var returnConv = chatAjax('/chatConvSel', sParam, 'post');
 					console.log(returnConv);
 					conData(returnConv);

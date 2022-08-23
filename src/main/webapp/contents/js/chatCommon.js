@@ -28,8 +28,8 @@
 				html += "<td id='idate_"+value.SEQ+"'>"+value.IDATE+"</td>";
 			    if (ynMap.update && ynMap.delete) {
 				    if (ynMap.update ==='Y' && ynMap.delete ==='Y'){
-						html+='<td><input type="button" name="'+value.SEQ+'" id="updateBtn" value="수정"></td>';
-						html+='<td><input type="button" id="completeBtn" value="완료"></td>'
+						html+='<td><input type="button" name="'+value.SEQ+'" id="upBtn" value="수정"></td>';
+						html+='<td><input type="button" id="comBtn" value="완료"></td>'
 						html+='<td><input type="button" id="delBtn" value="삭제"></td>';
 					}
 				}else{
@@ -98,8 +98,11 @@
 		
 	
 		function updateChk() {
-			$(document).on("click", "#updateBtn", function(e){
-				
+			$("#upBtn").click(function(){
+				alert("수정버튼");
+			});
+			$(document).on("click", "#upBtn", function(e){
+					alert("클릭");
 					//기존에 input을 text로 변경 작업 
 					var inputVal = $('#chat_data').find('a').parent().parent();
 				//	var inputVal = $("a[name=seq]");
@@ -183,22 +186,25 @@
 		
 
 		function deleteChk() {
-			$(document).on("click", "#delBtn", function(e){
+			$(document).off("click").on("click", "#delBtn", function(e){
 				console.log(e);
 				console.log(e.target);
 				console.log(e.target.parentElement);
 				var delTarget = $(e.target.parentElement.parentElement);
-				console.log(delTarget);
-				var text = delTarget[0].childNodes[1].innerHTML;
-				console.log(text);
-				var dParam = {'subject':text};
+			//	console.log(delTarget);
+				var seq = delTarget[0].childNodes[0].innerHTML;
+				var tname = delTarget[0].childNodes[1].innerHTML;
+				var uid = delTarget[0].childNodes[2].innerHTML;
+				var tableName = tname + uid
+			//	console.log(tableName);
+				var dParam = {'seq':seq};
 				var con = confirm("삭제하시겠습니까?");
 				if (!con) {
 					return false;
 				}
 				var deleteOk = chatAjax('/chatdelete', dParam, 'post');
 				if(deleteOk) {
-					var tdParam = {"tableName":text}
+					var tdParam = {"tableName":tableName}
 					chatAjax('/chatTableDrop', tdParam, 'post');
 				}
 				reload_data();

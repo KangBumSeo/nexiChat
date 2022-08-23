@@ -37,7 +37,7 @@
 			<attribute name="m2e-apt" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/sts/work/workspace/Nexicure Web Application/src/main/webapp/WEB-INF/lib/Nexicure Commons Library.jar"/>
+	<classpathentry kind="lib" path="C:/Users/YOU/Desktop/Nexicure Web Application/src/main/webapp/WEB-INF/lib/Nexicure Commons Library.jar"/>
 	<classpathentry kind="lib" path="D:/sts/work/workspace/Spit Reference Java Library/TIM/SIM7.0LIB/j2ee.jar"/>
 	<classpathentry kind="src" output="target/test-classes" path="target/generated-test-sources/test-annotations">
 		<attributes>

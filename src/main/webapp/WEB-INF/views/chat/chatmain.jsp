@@ -26,6 +26,7 @@
 
 		mainClick();
 
+		/*
 		$('#searchSel').change(function(e){
 			console.log("init")
 			if(e.target.value === 'a'
@@ -33,8 +34,7 @@
 				$('#searchSel').val( 'b');
 			}
 		});
-
-		/*
+	
 		$('#searchSel').keydown(function(e){
 			console.log("init keydown")
 			if(e.target.value === 'a'){
@@ -53,9 +53,12 @@
 			console.log("key >>> : " + key);
 		});
 
+		
 		$(document).on("keypress", "#searchSel", function(e) {
 			if (e.keyCode == 13) {
-				var value = $("#searchSel").val();	
+				var value = $.trim($("#searchSel").val());	
+				//console.log("value >>>>> : " + value);
+				
 				if (value === "") {
 					alert("검색할 내용을 입력하세요!");
 					$("#searchSel").focus();
@@ -73,7 +76,7 @@
 		
 
 		$("#search_btn").off().click( function(e){		
-			var value = $("#searchSel").val();	
+			var value = $.trim($("#searchSel").val());	
 			if (value === "") {
 				alert("검색할 내용을 입력하세요!");
 				$("#searchSel").focus();
@@ -108,12 +111,11 @@
 	};
 
 	function chatPopup (fnSeq, fnTname, fnUserid) {
-		var windowCheck = "";
+		var windowCheck;
 		var options = 'top=100, left=1400, width=594, height=685, location=no';
-		//window.popup('경로','팝업이름', '옵션');
-		if (windowCheck !=null ) {
-		};
-		window.open('/chatpop?seq='+fnSeq+'&'+'subject='+fnTname+'&'+'userid='+fnUserid, "_blank", options);
+	
+		windowCheck = window.open('/chatpop?seq='+fnSeq+'&'+'subject='+fnTname+'&'+'userid='+fnUserid, 'chatpop', options);
+
 	};	
 
 </script>

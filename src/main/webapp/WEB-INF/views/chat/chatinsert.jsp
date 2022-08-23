@@ -10,7 +10,7 @@
 
 	$(document).ready(function(){			
 
-		$("#submit_btn").prop('disabled', true);
+		//$("#submit_btn").prop('disabled', true);
 		
 		$("#userCheck").off().click(function(e){
 		
@@ -21,75 +21,97 @@
 		$("#submit_btn").off().click( function (event) {
 			//console.log(e)
 			
-			var subject = $("#subject").val();
-			var userid = $("#userid").val();
-			var tableName = subject + userid			
-			
-			console.log( typeof subject);
-			console.log( subject*1 );
-			console.log( isNaN(subject) )
-			console.log(tableName);
-			
-			if (subject === "") {
-				alert("채팅방 제목을 입력하세요");
+			if ( $("#idCheck").val() === 'y') {
+
+				var subject = $.trim($("#subject").val());
+				var userid = $.trim($("#userid").val());
+				var tableName = subject + userid			
 				
-				$("#subject").focus();
-				return;
-			}; 
-			
-			if($.isNumeric(subject)){
-				alert("문자+숫자 조합으로 입력하세요");
-				return;
-			};
-			
-			/*
-			if( !isNaN(subject*1) ){
-				alert("문자+숫자 조합으로 입력하세요");
-				return;
-			}
-			*/
-
-			if (userid === '') {
-				alert("채팅 방장을 입력하세요");
-			}
-			
-			var iParam = {
-					'subject':subject,
-					'userid':userid,
-					'tableName':tableName
-				}
-
-				var insertResult = runAjax('/chatinsertdata', iParam, 'post');
-				console.log(insertResult)
+				console.log( typeof subject);
+				console.log( subject*1 );
+				console.log( isNaN(subject) )
+				console.log(tableName);
+				
+				if (subject === "") {
+					alert("채팅방 제목을 입력하세요");
+					
+					$("#subject").focus();
+					return;
+				}; 
+				
+				if($.isNumeric(subject)){
+					alert("문자+숫자 조합으로 입력하세요");
+					return;
+				};
+				
 				/*
-				if (insertResult) {
-					var tableName = $('#subject').val();
-					var tParam = {'tableName':tableName};
-					console.log(tParam);
-					chatAjax('/chatTableInsert', tParam, 'post');
+				if( !isNaN(subject*1) ){
+					alert("문자+숫자 조합으로 입력하세요");
+					return;
 				}
 				*/
-				alert("채팅방이 생성되었습니다.");
-				var subject = $("#subject").val('');
-				var userid = $("#userid").val('');	
+
+				if (userid === '') {
+					alert("채팅 방장을 입력하세요");
+				}
+				
+				var iParam = {
+						'subject':subject,
+						'userid':userid,
+						'tableName':tableName
+					}
+
+					var insertResult = runAjax('/chatinsertdata', iParam, 'post');
+					console.log(insertResult)
+					/*
+					if (insertResult) {
+						var tableName = $('#subject').val();
+						var tParam = {'tableName':tableName};
+						console.log(tParam);
+						chatAjax('/chatTableInsert', tParam, 'post');
+					}
+					*/
+					alert("채팅방이 생성되었습니다.");
+					var subject = $("#subject").val('');
+					var userid = $("#userid").val('');	
+					$("#idCheck").val('');
+			}else{
+				alert("채팅 방장 중복 확인이 필요합니다.");
+				$("#idCheck").focus();
+			}		
+			
 		});		
 	});
 
 
 	function userCheck(e) {	
-		var subject = $("#subject").val();
-		var userid = $("#userid").val();
+		var subject = $.trim($("#subject").val());
+		var userid = $.trim($("#userid").val());
 		console.log("subject >>> : " + subject);
 		console.log("userid >>> : " + userid);
 		var cParam = {'key':'userid', 'value':userid}
 		var uCheck = chatAjax('/chatUserCheck', cParam, 'post');
 
-		if (uCheck === 1) {
+		if ( uCheck === 1) {
+			
 			alert("이미 채팅방이 존재합니다.");
 			return false;			
+		}else{
+			if(userid === '') {
+				alert("채팅 방장을 입력하세요");
+				return false;
+			}
+			alert("채팅방 생성이 가능합니다.");
+			$("#idCheck").val('y');
+			/*
+			console.log($("input[name=idCheck]")[0].value);
+			console.log( document.getElementsByName("idCheck") ) 
+			var test = document.getElementsByName("idCheck")
+			$.each(test, function(i,v){
+			});
+			*/
 		}
-		alert("채팅방 생성이 가능합니다.");
-		$("#submit_btn").prop('disabled', false);			
+		
 	};
 
 
@@ -163,7 +185,8 @@ table.type08 td {
 			</tr>
 			<tr>
 				<td colspan="2" style="text-align:center">
-				<input type="button" id="submit_btn" disabled="disabled" value="제출">
+				<input type="button" id="submit_btn" value="제출">
+				<input type="hidden" name="idCheck" id="idCheck" value="">
 				</td>
 			</tr>
 		</tbody>

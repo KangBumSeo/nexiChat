@@ -22,16 +22,16 @@
 		//mainClick();
 		updateChk();
 		updateOk();
-		reload_data("/chatselectAll");
 		deleteChk();
+		reload_data("/chatselectAll");
 		
 	
 
 	});
 
 	function updateOk() {
-		$("#completeBtn").off().click(function(e){
-
+		$(document).on("click", "#comBtn", function(e){
+			alert("확인 버튼 클릭");
 			var thVal = $('#data_table > thead > tr > th ');
 			console.log($('#data_table > thead > tr > th '));
 			//console.log($('#data_table > thead > tr > th ')[0].innerHTML);

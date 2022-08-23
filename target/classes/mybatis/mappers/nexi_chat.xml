@@ -45,7 +45,7 @@
 				, IDATE
 		FROM NEXI_CHAT
 		WHERE DELETEYN = 'N'
-		ORDER BY SEQ DESC
+		ORDER BY TO_NUMBER(SEQ) DESC
 	 </select>
 	 <!-- 
 	 select 
@@ -66,7 +66,7 @@
 		FROM NEXI_CHAT
 		WHERE ${key} LIKE '%' || #{value, jdbcType=VARCHAR} || '%'
 		AND DELETEYN = 'N'
-		ORDER BY SEQ DESC
+		ORDER BY TO_NUMBER(SEQ) DESC
 	</select>
 	
 	<insert id="nexiChatInsert" parameterType="HashMap">
@@ -109,7 +109,7 @@
 	
 	<delete id="nexiChatDelete" parameterType="HashMap">
 		DELETE NEXI_CHAT 
-		WHERE SUBJECT = #{subject, jdbcType=VARCHAR}
+		WHERE SEQ = #{seq, jdbcType=VARCHAR}
 	</delete>
 	
 	<insert id="nexichatTableDrop" parameterType="HashMap">
@@ -127,7 +127,7 @@
 			, HOSTCS
 			, USERCS 
 		FROM ${tableName}
-		ORDER BY SEQ DESC
+		ORDER BY TO_NUMBER(SEQ) DESC
 	</select>
 	
 	<insert id="nexiConvInsert" parameterType="HashMap">
