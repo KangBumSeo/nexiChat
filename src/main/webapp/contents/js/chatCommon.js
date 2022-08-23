@@ -10,12 +10,12 @@
 			var test0 = chatAjax(rUrl, param, 'post');
 			var updateYn = "";
 			var ynMap = {"update":"Y", "delete":"Y"};
-			whenSuccess_1(test0, updateYn, ynMap);
+			whenSuccess(test0, updateYn, ynMap);
 		}
 	
 	//	var updateYn = "";
 	//	var ynMap = {"update":"Y" , "delete":"Y"};
-		function whenSuccess_1( fnTest , updateYn , ynMap ) {
+		function whenSuccess( fnTest , updateYn , ynMap ) {
 			var html = '';
 			updateYn = "1"
 				
@@ -39,7 +39,6 @@
 			});
 			//$('#chat_data').empty();
 			$('#chat_data').append(html);
-			
 			
 			//[]
 			//var test = '<table id="sddd">';
@@ -98,10 +97,10 @@
 		
 	
 		function updateChk() {
-			$("#upBtn").click(function(){
-				alert("수정버튼");
-			});
+			console.log('1')
+			
 			$(document).on("click", "#upBtn", function(e){
+			//$('#upBtn').click(function(e){
 					alert("클릭");
 					//기존에 input을 text로 변경 작업 
 					var inputVal = $('#chat_data').find('a').parent().parent();
@@ -113,12 +112,7 @@
 					var arrTemp = [];
 					var thVal = $('#data_table > thead > tr > th ');
 					var id = $(e.target.parentElement.parentElement);//tr
-					
-					
-					
 	
-					
-
 					//console.log(id[0].childNodes);//td
 					//console.log(id.parent());
 				//	console.log(thVal);
@@ -184,9 +178,9 @@
 		};
 		
 		
-
+		
 		function deleteChk() {
-			$(document).off("click").on("click", "#delBtn", function(e){
+			$(document).on("click", "#delBtn", function(e){
 				console.log(e);
 				console.log(e.target);
 				console.log(e.target.parentElement);
@@ -210,40 +204,6 @@
 				reload_data();
 			});
 		}
-
-
-		/*		
-		function deleteChk() {
-			$(document).on("click", "#delBtn", function(e){
-				console.log(e)
-				console.log(e.target);
-				var temp = this.id;
-				//var test1 = this.value;
-				// e.target.id
-				console.log(temp)
-				//console.log(test1);
-				var delTarget = $('#'+temp).parent().parent() ;
-				console.log(delTarget)
-				//console.log(delTarget[0].innerText.split('\t'));
-				//slice( startindex, endindex )
-				console.log( delTarget[0].childNodes[0].innerHTML )
-				//var deldata = 
-				//chatAjax("/chatdelete", );
-				var text =  delTarget[0].childNodes[1].innerHTML;//데이터 추출
-				console.log(text)
-				// delTarget[0].childNodes[1].innerHTML = "<input value="+text+">"
-				var dParam = {'subject':text};
-				var con = confirm("삭제하시겠습니까?");
-				if(!con) {
-					return false;
-				}	
-
-				chatAjax('/chatdelete', dParam, 'post');	
-				location.reload();		
-			});
-		};
-
-		*/
 		
 		
 	

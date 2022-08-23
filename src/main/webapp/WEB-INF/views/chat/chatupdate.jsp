@@ -9,27 +9,30 @@
 <script type="text/javascript" src="/contents/js/chatCommon.js" charset="EUC-KR"></script>
 <script type="text/javascript">
 
-	$(document).ready(function(){
+	//$(document).on(function(){
+	$(function(){
+		$(document).off("click");
 		var param = {'':''};
 		var test0 = chatAjax("/chatselectAll", param, 'post');
 		console.log(test0);
 		// 기본 화면 로딩
 		//whenSuccess(test0);
 		
-		var updateYn = "";
-		var ynMap = {"update":"Y", "delete":"Y"};
-		whenSuccess_1(test0, updateYn, ynMap);
+		//var ynMap = {"update":"Y", "delete":"Y"};
+		//whenSuccess_1(test0, updateYn, ynMap);
 		//mainClick();
+		
+		reload_data("/chatselectAll");
 		updateChk();
 		updateOk();
 		deleteChk();
-		reload_data("/chatselectAll");
 		
 	
 
 	});
 
 	function updateOk() {
+		
 		$(document).on("click", "#comBtn", function(e){
 			alert("확인 버튼 클릭");
 			var thVal = $('#data_table > thead > tr > th ');
