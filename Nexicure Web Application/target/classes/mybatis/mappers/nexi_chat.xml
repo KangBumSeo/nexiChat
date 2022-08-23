@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nexicure.nim.dao.nexiChatDAO">
+
+	<!--  resultType 재확인 해보세요! 
+	
+		'A' : 해당 부분은 return까지 완료 되면 지우고 변수로 받을 수 있도록 변경 해야합니다.
+		
+	 -->
+	 <!-- 
+	 
+	 <if test="pw != null">
+	  AND PW = #{pw}
+	 </if>
+	 
+	 <choose>   
+	 	 if
+		 <when test = "searchCondition == 'title'">   
+		     AND TITLE LIKE #{title}   
+		 </when>  
+		 if
+		  <when test = "searchCondition == 'content'">    
+		    AND CONTENT LIKE #{content}  
+		  </when> 
+		 else
+		   <otherwise>
+		        AND DEL_YN = 'N'   
+		 </otherwise>
+	 </choose>
+	 
+	 <foreach item="item" index="index" collection="list"
+      open="(" separator="AMD temp =" close=")">
+      // (
+       and temp = #{item}
+       and temp = #{index}
+       //)
+  	 </foreach>
+	 
+	  -->
+	 <select id="nexiChatAll" resultType="HashMap">
+	 	SELECT 
+				  SEQ
+				, SUBJECT
+				, USERID
+				, IDATE
+		FROM NEXI_CHAT
+		WHERE DELETEYN = 'N'
+		ORDER BY TO_NUMBER(SEQ) DESC
+	 </select>
+	 <!-- 
+	 select 
+	  	  SEQ
+		, SUBJECT
+		, USERID
+		, IDATE
+	 from NEXI_CHAT
+	 where #{key, jdbcType=VARCHAR} = #{value, jdbcType=VARCHAR}
+	 ORDER BY SEQ DESC
+	  -->
+	<select id="nexiChat" parameterType="HashMap" resultType="HashMap">
+		SELECT 
+				  SEQ
+				, SUBJECT
+				, USERID
+				, IDATE
+		FROM NEXI_CHAT
+		WHERE ${key} LIKE '%' || #{value, jdbcType=VARCHAR} || '%'
+		AND DELETEYN = 'N'
+		ORDER BY TO_NUMBER(SEQ) DESC
+	</select>
+	
+	<insert id="nexiChatInsert" parameterType="HashMap">
+		INSERT INTO NEXI_CHAT(
+								  SEQ
+								, SUBJECT
+								, USERID
+								, IDATE
+								, DELETEYN
+							  ) 
+						VALUES (
+							    SEQ.NEXTVAL
+							    ,#{subject, jdbcType=VARCHAR}
+							    ,#{userid, jdbcType=VARCHAR}
+							    , TO_CHAR(SYSDATE,'YYYY-MM-DD HH24:MI:SS')
+							    , 'N'
+							)	
+	</insert>
+	
+	<insert id="nexichatTableInsert" parameterType="HashMap">
+		CREATE TABLE ${tableName} (
+	     SEQ		VARCHAR2(1000)	PRIMARY KEY 
+	    ,HOSTID		VARCHAR2(100)	NOT NULL
+	    ,USERID		VARCHAR2(100)
+	    ,HOSTCS	VARCHAR2(1000)
+	    ,USERCS	VARCHAR2(1000)
+	    ,IDATE      VARCHAR2(100)
+	)	
+	</insert>
+	
+	<update id="nexiChatUpdateOk" parameterType="HashMap">
+		UPDATE NEXI_CHAT
+		SET 
+			  SUBJECT = #{subject, jdbcType=VARCHAR}
+			, USERID = #{userid, jdbcType=VARCHAR}
+			, IDATE = TO_CHAR(SYSDATE,'YYYY-MM-DD HH24:MI:SS')
+		WHERE SEQ = #{seq, jdbcType=VARCHAR}
+	
+	</update>
+	
+	<delete id="nexiChatDelete" parameterType="HashMap">
+		DELETE NEXI_CHAT 
+		WHERE SEQ = #{seq, jdbcType=VARCHAR}
+	</delete>
+	
+	<insert id="nexichatTableDrop" parameterType="HashMap">
+		DROP TABLE ${tableName}
+	</insert>
+
+
+
+	<!-- ======================채팅 내용===================== -->
+	<select id="nexiConvSelect" parameterType="HashMap" resultType="HashMap">
+		SELECT 
+				SEQ
+			, HOSTID
+			, USERID
+			, HOSTCS
+			, USERCS 
+		FROM ${tableName}
+		ORDER BY TO_NUMBER(SEQ) DESC
+	</select>
+	
+	<insert id="nexiConvInsert" parameterType="HashMap">
+		 INSERT INTO ${tableName}(
+				   SEQ
+				 , HOSTID
+				 , USERID
+				 , HOSTCS
+				 , USERCS
+				 , IDATE 
+ 		)VALUES(
+		 		  CHAT_CONV_SEQ.NEXTVAL
+		 		, #{hostid, jdbcType=VARCHAR}
+		 		, #{userid, jdbcType=VARCHAR}
+		 		, #{hostcs, jdbcType=VARCHAR}
+		 		, #{usercs, jdbcType=VARCHAR}
+		 		, TO_CHAR(SYSDATE,'YYYY-MM-DD HH24:MI:SS')
+		)
+	
+	</insert>
+	
+	
+	
+	<!-- 
+	CREATE TABLE ${tableName} (
+	     SEQ		VARCHAR2(1000)	PRIMARY KEY 
+	    ,SUBJECT	VARCHAR2(100)	NOT NULL
+	    ,USERID		VARCHAR2(100)	
+	    ,IDATE      VARCHAR2(100)
+	    ,DELETEYN	VARCHAR2(1)	NOT NULL 
+	);
+	 -->
+	
+	<!--login -->
+	<select id="loginChat" parameterType="HashMap" resultType="HashMap">
+	SELECT 
+			  SEQ
+			, USERID
+			, USERNAME
+	FROM NEXI_CHAT_USER
+	WHERE USERID = #{id, jdbcType=VARCHAR}
+		<if test="password != null and password != '' ">
+			AND USERPW = #{password, jdbcType=VARCHAR}
+		</if>
+	</select>
+		
+	<!--signup -->
+	<insert id="signUpInsert" parameterType="HashMap">
+	INSERT INTO NEXI_CHAT_USER(
+			 SEQ
+			,USERID
+			,USERPW
+			,USERNAME
+			,USERBIRTH
+   ) VALUES(
+   			 chat_user_seq.nextval
+			,#{id, jdbcType=VARCHAR}
+			,#{password, jdbcType=VARCHAR}
+			,#{name, jdbcType=VARCHAR}
+			,#{birth, jdbcType=VARCHAR}
+	)
+	</insert>
+	
+	
+</mapper>

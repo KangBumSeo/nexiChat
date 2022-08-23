@@ -1,0 +1,229 @@
+#ldapmodify -h localhost -p 389 -D cn=root -w tivoli -a -c -k -r -f c:\simsecschema.def
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.1
+  NAME 'simuseflag'
+  DESC 'code use flag'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.2
+  NAME 'simcodename'
+  DESC 'code name'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.3
+  NAME 'simtemp1'
+  DESC 'temp1'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.4
+  NAME 'simtemp2'
+  DESC 'temp2'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.5
+  NAME 'simtemp3'
+  DESC 'temp3'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.6
+  NAME 'simdorder'
+  DESC 'dorder'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.7
+  NAME 'simcategory'
+  DESC 'category'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.8
+  NAME 'simresstatus'
+  DESC 'Resource Status'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.9
+  NAME 'simservicegroup'
+  DESC 'Service Group'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.10
+  NAME 'simNotlogonAccount'
+  DESC 'NOT LOGON Account Flag'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.11
+  NAME 'simDefaultAccount'
+  DESC 'Default Account Flag'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.12
+  NAME 'simDormantAccount'
+  DESC 'Default Account Flag'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.13
+  NAME 'simsystempwdvl'
+  DESC 'System Distinguished Password value'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.14
+  NAME 'simExceptionAccount'
+  DESC 'Exception Account Flag'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.15
+  NAME 'simreconstat'
+  DESC 'SIM Reconcile Status'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: attributetypes
+attributetypes: (
+  1.9.13.4.3.2006.1.16
+  NAME 'simloginurl'
+  DESC 'Service Login URL'
+  SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+  SINGLE-VALUE
+ )
+
+dn: cn=schema
+changetype: modify
+add: objectclasses
+objectclasses: (
+  1.9.13.4.3.2006.2.1
+  NAME 'simCode'
+  DESC 'Sim Code Object'
+  SUP Top
+  Structural
+  MUST ( cn $ description $ simuseflag )
+  MAY (  )
+ )
+
+dn: cn=schema
+changetype: modify
+add: objectclasses
+objectclasses: (
+  1.9.13.4.3.2006.2.2
+  NAME 'simCodeDesc'
+  DESC 'Sim CodeDesc Object'
+  SUP Top
+  Structural
+  MUST ( cn $ simcodename $ description $ simuseflag )
+  MAY ( simtemp1 $ simtemp2 $ simtemp3 $ simdorder )
+ )
+
+dn: cn=schema
+changetype: modify
+replace: objectclasses
+objectclasses: (
+  1.3.6.1.4.1.6054.1.2.6
+  NAME 'erserviceitem'
+  DESC '-'
+  SUP Top
+  AUXILIARY
+  MUST (  )
+  MAY ( description $ erAlertOption $ erNonComplianceAction $ erPrerequisite $ erServiceName $ owner $ simcategory $ simresstatus $ simservicegroup $ simsystempwdvl $ simreconstat )
+ )
+
+dn: cn=schema
+changetype: modify
+replace: objectclasses
+objectclasses: (
+  1.3.6.1.4.1.6054.1.2.2
+  NAME 'eraccountitem'
+  DESC '-'
+  SUP Top
+  AUXILIARY
+  MUST (  )
+  MAY ( erAccessLastCertifiedDate $ erAccessRecertificationLastAction $ erAccountCompliance $ erAccountStatus $ erCreateDate $ erHistoricalPassword $ erLastAccessDate $ erLastCertifiedDate $ erLastOperation $ erLastRecertificationAction $ erLastStatusChangeDate $ erObjectType $ erPassword $ erPswdLastChanged $ erService $ erUid $ owner $ simDefaultAccount $ simExceptionAccount $ simNotlogonAccount $ simDormantAccount $ erChangePswdRequired )
+ )
