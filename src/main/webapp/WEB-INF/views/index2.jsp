@@ -16,7 +16,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js" type="text/javascript"></script>
 <script type="text/javascript">
-//test
+
 function encryptByAESECB(message, key) {
     var keyHex = CryptoJS.enc.Utf8.parse(key);
     var encrypted = CryptoJS.AES.encrypt(message, keyHex, {
