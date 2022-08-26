@@ -12,16 +12,13 @@
 			var ynMap = {"update":"Y", "delete":"Y"};
 			whenSuccess(test0, updateYn, ynMap);
 		}
-	
-	//	var updateYn = "";
-	//	var ynMap = {"update":"Y" , "delete":"Y"};
+
 		function whenSuccess( fnTest , updateYn , ynMap ) {
 			var html = '';
 			updateYn = "1"
 				
 			$.each( fnTest, function(key, value) {
 			    html += "<tr>";			
-				//var html = "<tr align='center'>";
 				html += "<td id='seq_"+value.SEQ+"'>"+value.SEQ+"</td>";
 				html += "<td id='subject_"+value.SEQ+"'>"+value.SUBJECT+"</td>";
 				html += "<td id='userid_"+value.SEQ+"'>"+value.USERID+"</td>";
@@ -37,11 +34,8 @@
 				}
 				html += "</tr>";
 			});
-			//$('#chat_data').empty();
 			$('#chat_data').append(html);
-			
-			//[]
-			//var test = '<table id="sddd">';
+
 		};
 		
 		
@@ -73,7 +67,6 @@
 								this.innerHTML = "<td id='subject_'>"+document.getElementsByName('val')[0].value+"</td>";
 							}
 						} 
-					
 						
 						/*
 						if (i != 0) {
@@ -81,8 +74,7 @@
 						}else{
 							this.innerHTML = "<td id='seq_"+inputVal+"'>"+inputVal+"</td>";
 						}
-						*/
-					
+						*/	
 					
 				});
 				
@@ -97,86 +89,77 @@
 		
 	
 		function updateChk() {
-			console.log('1')
-			
 			$(document).on("click", "#upBtn", function(e){
-			//$('#upBtn').click(function(e){
-					alert("클릭");
-					//기존에 input을 text로 변경 작업 
-					var inputVal = $('#chat_data').find('a').parent().parent();
-				//	var inputVal = $("a[name=seq]");
-					console.log(inputVal);
-					var changeVal = $(e.target.parentElement.parentElement);
-					input_change(inputVal );
-					
-					var arrTemp = [];
-					var thVal = $('#data_table > thead > tr > th ');
-					var id = $(e.target.parentElement.parentElement);//tr
+				//기존에 input을 text로 변경 작업 
+				var inputVal = $('#chat_data').find('a').parent().parent();
+			//	var inputVal = $("a[name=seq]");
+				console.log(inputVal);
+				var changeVal = $(e.target.parentElement.parentElement);
+				input_change(inputVal );
+				
+				var arrTemp = [];
+				var thVal = $('#data_table > thead > tr > th ');
+				var id = $(e.target.parentElement.parentElement);//tr
 	
-					//console.log(id[0].childNodes);//td
-					//console.log(id.parent());
-				//	console.log(thVal);
-				//	console.log(thVal[0].id);
-					//console.log($('#data_table > thead > tr > th ')[0].innerHTML);
+				//console.log(id[0].childNodes);//td
+				//console.log(id.parent());
+			//	console.log(thVal);
+			//	console.log(thVal[0].id);
+				//console.log($('#data_table > thead > tr > th ')[0].innerHTML);
+				
+				//4
+				$.each(thVal, function(i, v){
+					var thValue = v.id
+				//	console.log(thValue);
+					arrTemp.push(thValue); 
 					
-					//4
-					$.each(thVal, function(i, v){
-						var thValue = v.id
-					//	console.log(thValue);
-						arrTemp.push(thValue); 
-						
-					});
-					//console.log("arrTemp >>> : " + arrTemp);
-					//5
-					console.log(id[0].childNodes)
-					var uVal = [];
-						for (i=0; i<id[0].childNodes.length; i++) {
-							uVal.push(id[0].childNodes[i].id);
-						} 
-						console.log(uVal);
+				});
+				//console.log("arrTemp >>> : " + arrTemp);
+				//5
+				console.log(id[0].childNodes)
+				var uVal = [];
+					for (i=0; i<id[0].childNodes.length; i++) {
+						uVal.push(id[0].childNodes[i].id);
+					} 
+					console.log(uVal);
+	
+	
+				var chkButton = $(e.target)[0].name;
+				
+				console.log(chkButton);
+				console.log(id[0].childNodes)
+				
+	
+				$.each(id[0].childNodes ,function(i,v){
+					var tempValue = v.innerHTML;
+					console.log(tempValue);
+					/*
+					var test = ['1','2','3','99','33'];
+					console.log(test.indexOf('99'));
+					console.log( test[test.indexOf('99')] )
+					console.log(tempValue.indexOf('input'))
+					console.log(tempValue.indexOf('button'))
+					// 확인 작업 
+					*/				
 
-
-					var chkButton = $(e.target)[0].name;
-					
-					console.log(chkButton);
-					console.log(id[0].childNodes)
-					
-
-					$.each(id[0].childNodes ,function(i,v){
-						var tempValue = v.innerHTML;
-						console.log(tempValue);
-						/*
-						var test = ['1','2','3','99','33'];
-						console.log(test.indexOf('99'));
-						console.log( test[test.indexOf('99')] )
-						console.log(tempValue.indexOf('input'))
-						console.log(tempValue.indexOf('button'))
-						// 확인 작업 
-						*/						
-
-						
-						
-						if( tempValue.indexOf('button') === -1 //tempValue.split('button').length === 1
-						 && tempValue.indexOf('input') === -1
-					
-							){
-							//arrTemp[i]
-						//this.innerHTML = '<input style="width:80%;" value="'+tempValue+'" id="'+uVal[i]+'" />';
-													
-							if (i != 0  ) {
-								this.innerHTML = '<input style="width:80%;" name="val" value="'+tempValue+'" />';
-							}else{
-								this.innerHTML = '<a style="width:80%;" name="seq">'+tempValue+'</a>';
-							}
+					if( tempValue.indexOf('button') === -1 //tempValue.split('button').length === 1
+					 && tempValue.indexOf('input') === -1
+				
+						){
+						//arrTemp[i]
+					//this.innerHTML = '<input style="width:80%;" value="'+tempValue+'" id="'+uVal[i]+'" />';
+												
+						if (i != 0  ) {
+							this.innerHTML = '<input style="width:80%;" name="val" value="'+tempValue+'" />';
+						}else{
+							this.innerHTML = '<a style="width:80%;" name="seq">'+tempValue+'</a>';
 						}
-							
-					}); //foreach 끝					
-				//	console.log($("a[name=seq]").length);
+					}
 						
-
+				}); //foreach 끝					
+			//	console.log($("a[name=seq]").length);
 			});
 		};
-		
 		
 		
 		function deleteChk() {
@@ -185,12 +168,10 @@
 				console.log(e.target);
 				console.log(e.target.parentElement);
 				var delTarget = $(e.target.parentElement.parentElement);
-			//	console.log(delTarget);
 				var seq = delTarget[0].childNodes[0].innerHTML;
 				var tname = delTarget[0].childNodes[1].innerHTML;
 				var uid = delTarget[0].childNodes[2].innerHTML;
 				var tableName = tname + uid
-			//	console.log(tableName);
 				var dParam = {'seq':seq};
 				var con = confirm("삭제하시겠습니까?");
 				if (!con) {

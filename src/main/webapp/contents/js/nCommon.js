@@ -13,7 +13,7 @@ function chatAjax(aUrl, aParam, aType) {
 		dataType: 'json',
 		async : false , // 동기 비동기 설정 안하면 왜 순서가 바뀌지....?
 		contentType: 'application/json; charset=UTF-8',
-		success: function(result){
+		success: function(result,textStatus){
 			console.log("success");
 			console.log(result);
 			successResult = result;
@@ -79,16 +79,28 @@ function runAjax( fnUrl , fnParam , fnType ){
         },
         complete : ( result ) => {
         	// 로딩 CSS 추가 가능
-        	if( setLoadingTarget != '' && setLoadingTarget ){ $('#'+setLoadingTarget).removeClass(setLoadingCss); }
+        	console.log(result)
+        	console.log(result.redirect)
+				if( setLoadingTarget != '' && setLoadingTarget ){ $('#'+setLoadingTarget).removeClass(setLoadingCss); }
         	return result;
         },
-        success: (result) => {
+        success: (result,textStatus) => {
         		//whenSuccess(result);
+        	console.log(result)
+        	console.log(result.redirect)
+        	if ( result.redirect ) {
+	            // data.redirect contains the string URL to redirect to
+	            location.href = result.redirect;
+	        } 
+			else{
                 if(setClickTarget !='' ){ $('#'+setClickTarget).bind('click'); }
                 console.log( result);
                 returnVal = result;
+			}
         },
         error:  ( request , status , error) => {
+        	console.log(request)
+        	console.log(request.redirect)
         	throw new Error( request.responseText )
         }
     });
