@@ -89,7 +89,9 @@
 	<insert id="nexichatTableInsert" parameterType="HashMap">
 		CREATE TABLE ${tableName} (
 	     SEQ		VARCHAR2(1000)	PRIMARY KEY 
+	    ,HOSTID		VARCHAR2(100)	NOT NULL
 	    ,USERID		VARCHAR2(100)
+	    ,HOSTCS	VARCHAR2(1000)
 	    ,USERCS	VARCHAR2(1000)
 	    ,IDATE      VARCHAR2(100)
 	)	
@@ -120,7 +122,9 @@
 	<select id="nexiConvSelect" parameterType="HashMap" resultType="HashMap">
 		SELECT 
 				SEQ
+			, HOSTID
 			, USERID
+			, HOSTCS
 			, USERCS 
 		FROM ${tableName}
 		ORDER BY TO_NUMBER(SEQ) DESC
@@ -129,12 +133,16 @@
 	<insert id="nexiConvInsert" parameterType="HashMap">
 		 INSERT INTO ${tableName}(
 				   SEQ
+				 , HOSTID
 				 , USERID
+				 , HOSTCS
 				 , USERCS
 				 , IDATE 
  		)VALUES(
 		 		  CHAT_CONV_SEQ.NEXTVAL
+		 		, #{hostid, jdbcType=VARCHAR}
 		 		, #{userid, jdbcType=VARCHAR}
+		 		, #{hostcs, jdbcType=VARCHAR}
 		 		, #{usercs, jdbcType=VARCHAR}
 		 		, TO_CHAR(SYSDATE,'YYYY-MM-DD HH24:MI:SS')
 		)
