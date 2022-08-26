@@ -4,7 +4,7 @@
 	<div id="left">
 		<div class="hdtit">
 			<h1 style="font-size:large; font-weight: bold;">
-			<a href="#"><%-- <img src="${img_url}main/sub_logo1.png" alt=""/>--%>ICM2</a>
+			<a href="/" style="color: #fff;"><%-- <img src="${img_url}main/sub_logo1.png" alt=""/>--%>ICM2</a>
 			</h1>
 		</div>
 		<nav id="menu">
