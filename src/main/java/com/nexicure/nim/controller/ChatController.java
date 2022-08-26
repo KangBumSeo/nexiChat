@@ -27,6 +27,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.nexicure.nim.services.nexiChatService;
 import com.nexicure.nim.services.testService;
 
+import jdk.nashorn.internal.ir.RuntimeNode.Request;
+
 @Controller
 public class ChatController  {
 	private static Logger logger = LogManager.getLogger(ChatController.class);
@@ -36,8 +38,6 @@ public class ChatController  {
 	
 	@Autowired
 	private nexiChatService ns;
-	
-	
 	
 	@RequestMapping( value="/login" , method = RequestMethod.GET ) 
 	@ResponseBody
@@ -49,11 +49,43 @@ public class ChatController  {
 	
 	@RequestMapping( value="/loginChat", method=RequestMethod.POST)
 	@ResponseBody
-	public ArrayList<HashMap<String, Object>> loginChat (@RequestBody HashMap<String, Object> loginParam) {
+	public HashMap<String,Object> loginChat (@RequestBody HashMap<String, Object> loginParam, HttpServletRequest request) {
 		logger.info("ChatController loginChat()시작  >> :");
 		System.out.println("loginParam >>>> : " + loginParam);
+		
+		
 		ArrayList<HashMap<String, Object>> loginResult = ns.loginChat(loginParam);
-		return loginResult;
+		HashMap<String,Object> returnMap = new HashMap<>();
+
+		
+		if (loginResult != null && loginResult.size() != 0) {
+
+			String loginName =  loginResult.get(0).get("USERNAME").toString();
+			String loginId = loginResult.get(0).get("USERID").toString();
+			String loginSeq = loginResult.get(0).get("SEQ").toString();
+			//String loginId = loginResult.get(0).get("").toString();
+			
+			HttpSession session = request.getSession();
+			session.setAttribute("username",loginName );
+			session.setAttribute("userid", loginId);
+			session.setAttribute("userseq", loginSeq);
+			
+			System.out.println("controller username >>>> : " + loginId);
+		
+			//  session.setMaxInactiveInterval(int interval)
+			//session.getCreationTime()
+			
+			returnMap.put("redirect", "/");
+		}
+		else {
+			returnMap.put("loginStatus", "Fail");
+		}
+		
+		 
+				 
+		//return "/index" ;//view->redirect.jsp를 호출
+		//return "forward:index.jsp";
+		return returnMap;
 	}
 	
 	@RequestMapping(value="/signUpInsert", method=RequestMethod.POST)
