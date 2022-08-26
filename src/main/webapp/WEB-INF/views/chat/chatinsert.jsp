@@ -13,25 +13,24 @@
 		//$("#submit_btn").prop('disabled', true);
 		
 		$("#userCheck").off().click(function(e){
-		
-			userCheck();		
 			
+			userCheck();				
 		});
 
 		$("#submit_btn").off().click( function (event) {
-			//console.log(e)
 			
 			if ( $("#idCheck").val() === 'y') {
 
 				var subject = $.trim($("#subject").val());
 				var userid = $.trim($("#userid").val());
 				var tableName = subject + userid			
-				
+
+				/*
 				console.log( typeof subject);
 				console.log( subject*1 );
 				console.log( isNaN(subject) )
 				console.log(tableName);
-				
+				*/
 				if (subject === "") {
 					alert("채팅방 제목을 입력하세요");
 					
@@ -62,15 +61,7 @@
 					}
 
 					var insertResult = runAjax('/chatinsertdata', iParam, 'post');
-					console.log(insertResult)
-					/*
-					if (insertResult) {
-						var tableName = $('#subject').val();
-						var tParam = {'tableName':tableName};
-						console.log(tParam);
-						chatAjax('/chatTableInsert', tParam, 'post');
-					}
-					*/
+					
 					alert("채팅방이 생성되었습니다.");
 					var subject = $("#subject").val('');
 					var userid = $("#userid").val('');	
@@ -78,8 +69,7 @@
 			}else{
 				alert("채팅 방장 중복 확인이 필요합니다.");
 				$("#idCheck").focus();
-			}		
-			
+			}				
 		});		
 	});
 
@@ -110,8 +100,7 @@
 			$.each(test, function(i,v){
 			});
 			*/
-		}
-		
+		}		
 	};
 
 
@@ -129,10 +118,10 @@ table.type08 {
 table.type08 thead th {
   padding: 10px;
   font-weight: bold;
-  border-top: 1px solid #ccc;
-  border-right: 1px solid #ccc;
-  border-bottom: 2px solid #c00;
-  background: #dcdcd1;
+  border-top: 1px solid #999696;
+  border-right: 1px solid #999696;
+  background: #bccae7;
+  text-align: center;
 }
 table.type08 tbody th {
   width: 150px;
@@ -170,14 +159,14 @@ table.type08 td {
 			</tr>
 			 -->
 			<tr>
-				<td>채팅방 제목</td>
+				<td style="background: #eee; text-align: center; font-weight: bold;">채팅방 제목</td>
 				<td>
 				<input type="text" name="subject" id="subject" placeholder="문자+숫자 조합으로 입력하세요"
 						style="width:200px;">
 				</td>
 			</tr>
 			<tr>
-				<td>채팅 방장</td>
+				<td style="background: #eee; text-align: center; font-weight: bold;">채팅 방장</td>
 				<td>
 				<input type="text" name="userid" id="userid" style="width:200px;">
 				<input type="button" name="userCheck" id="userCheck" value="중복 확인">
