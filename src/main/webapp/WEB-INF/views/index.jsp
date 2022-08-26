@@ -123,7 +123,8 @@ $(document).ready(function() {
 	chatInsert();
 	chatUpdate();
 	chatLogin();
-	
+
+	/*
    var chart = {
       type: 'column',
       width:'650',
@@ -145,7 +146,7 @@ $(document).ready(function() {
          text: '계정 수'
       }
    };
-   /*
+
    var tooltip = {
       headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
       pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
@@ -154,7 +155,7 @@ $(document).ready(function() {
       shared: true,
       useHTML: true
    };
-   */
+
    var plotOptions = {
       column: {
          pointPadding: 0.2,
@@ -193,10 +194,11 @@ $(document).ready(function() {
    json.plotOptions = plotOptions;
    json.credits = credits;
    $('#nxc1').highcharts(json);
-
+	 */
 });
 </script>
 <script language="JavaScript">
+/*
 $(document).ready(function() {
    var chart = {
       type: 'column',
@@ -219,7 +221,7 @@ $(document).ready(function() {
          text: '처리 수'
       }
    };
-   /*
+
    var tooltip = {
       headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
       pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
@@ -228,7 +230,7 @@ $(document).ready(function() {
       shared: true,
       useHTML: true
    };
-   */
+
    var plotOptions = {
       column: {
          pointPadding: 0.2,
@@ -268,6 +270,8 @@ $(document).ready(function() {
    $('#nxc2').highcharts(json);
 
 });
+
+*/
 </script>
 <script type="text/javascript">
 	$(function(){
@@ -288,6 +292,11 @@ $(document).ready(function() {
 
 </script>
 <style>
+
+input[type="button"]{
+	cursor : pointer;
+}
+
 table.type08 {
   border-collapse: collapse;
   text-align: left;
@@ -301,7 +310,6 @@ table.type08 thead th {
   font-weight: bold;
   border-top: 1px solid #ccc;
   border-right: 1px solid #ccc;
-  border-bottom: 2px solid #c00;
   background: #dcdcd1;
 }
 table.type08 tbody th {
@@ -310,7 +318,7 @@ table.type08 tbody th {
   font-weight: bold;
   vertical-align: top;
   border-right: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
+
   background: #ececec;
 }
 table.type08 td {
@@ -329,7 +337,10 @@ table.type08 td {
 	<div id="container" >
 		<%@ include file="/WEB-INF/views/jspf/sysmgmt_top.jsp" %>
 		<div class="location">
-			<div class="inr"><a href="#"><img src="${img_url}main/ico_home.png" alt="home"></a><!-- &gt;
+			<div class="inr">
+				<a href="/">
+				<img src="${img_url}main/ico_home.png" alt="home">
+				</a><!-- &gt;
 				<spring:message code="MNU_4000"/> &gt; <strong><spring:message code="MNU_4100"/></strong-->
 			</div>
 		</div>
@@ -344,6 +355,7 @@ table.type08 td {
 
 		<div id="contents">
 			<div class="section" style="width:50%;float:left;">
+			<%-- 
 			<!-- div style=" text-align: center;font-size: 16;">계정 현황</div -->
 				<table class="type08" width=700 style="table-layout: fixed">
 					<thead>
@@ -399,8 +411,10 @@ table.type08 td {
 					</tr>
 					</tbody>
 				</table>
+				--%>
 			</div>
 			<div class="section" style="width:50%;float:right;">
+			<%-- 
 			<!--div style=" text-align: center;font-size: 16;">일일 처리 현황</div -->
 				<table class="type08" width=700 style="table-layout: fixed">
 					<thead>
@@ -456,6 +470,7 @@ table.type08 td {
 					</tr>
 					</tbody>
 				</table>
+				--%>
 			</div>
 		</div>
 	</div>
