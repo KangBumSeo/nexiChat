@@ -35,9 +35,6 @@
 
 	<link rel="stylesheet" type="text/css" href="${css_url}font/font-awesome.min.css"/>
 	<link rel="stylesheet" type="text/css" href="${css_url}menu.css"/>
-	
-	<link type="text/css" rel="stylesheet" href="${css_url}jsgrid/jsgrid.css" />
-	<link type="text/css" rel="stylesheet" href="${css_url}jsgrid/jsgrid-theme.css" />
  
 	<script type="text/javascript" src="${js_url}jsgrid/jsgrid.js"></script>
 
