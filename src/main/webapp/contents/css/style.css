@@ -1,4 +1,4 @@
-@charset "utf-8";
+ @charset "utf-8";
 
 @import url(font/nanumgothic.css);
 
@@ -102,12 +102,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#54b8ff', end
 -moz-box-shadow: inset -4px 0px 5px 0px rgba(0,0,0,0.45);
 box-shadow: inset -4px 0px 5px 0px rgba(0,0,0,0.45);
 }
-#left .hdtit {height:49px;border-bottom:1px solid #202428;background:url(../images/main/bg_left_hd.png) no-repeat 0 0;}
+#left .hdtit {height:49px;border-bottom:1px solid #202428;background:#507696;}
 #left .hdtit h1 {padding:12px 0 0 20px;}
 #left #menu > ul > li > a {display:block;height:38px;padding-left:20px;line-height:38px;color:#fff;font-size:14px;}
 #left #menu > ul > li > a i {margin-right:5px;font-size:16px;margin-top:-3px;}
 #left #menu > ul > li > a span {display:inline-block;float:right;width:13px;height:13px;margin:13px 15px 0 0;background:url(../images/main/left_ico_p.png) no-repeat 0 0;}
-#left #menu > ul > li > ul {display:none;padding:10px 0;background:url(../images/main/bg_sub.png) repeat;
+#left #menu > ul > li > ul {display:none;padding:10px 0;background:#507696;
 -webkit-box-shadow: inset -4px 0px 5px 0px rgba(0,0,0,0.45);
 -moz-box-shadow: inset -4px 0px 5px 0px rgba(0,0,0,0.45);
 box-shadow: inset -4px 0px 5px 0px rgba(0,0,0,0.45);
