@@ -1,12 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <spring:url value="/resources/contents/images/" var="img_url" />
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-latest.js"></script> 
 <script type="text/javascript" src="/contents/js/nCommon.js"></script>
@@ -465,7 +465,7 @@
 	function layerOpen(id, chatSeq , click_yn ) {
 	      console.log("hi");
 	      //$("#"+id).on("click", function(){
-	      var clickYn = 'Y';
+	      //var clickYn = 'Y';
 	      /*
 	      layerOpen.setClickYn = function() { clickYn = 'N'; }
 	      layerOpen.clickReset = function() { clickYn = 'Y'; }
@@ -491,17 +491,19 @@ layerOpen.in = function( id , chatSeq ){
 	var param = {'id' : sessionId}
 	var userData = chatAjax('/userSelect', param, 'post');
 	$("#SelPop").show();
+	$('#SelPop').css('width','800px');
 	$("#pvHtml").remove();
-	chatTypeHtml( sessionId , 'memberchat' , 'N' , userData , 'Y' );
+	chatTypeHtml( sessionId , 'memberchat' , 'N' , userData , 'U' );
 	});
 } 	
 	
 layerOpen.sel = function(id,chatSeq){
     $("#"+id).on("mouseover", function(){
-         $("#userList").remove();
-         $("#pvHtml").remove();
+        $("#userList").remove();
+        $("#pvHtml").remove();
          
-         $("#SelPop").show();
+        $("#SelPop").show();
+		$('#SelPop').css('width','800px');
         param = {"chatSeq":chatSeq}
          
          var userResult = chatAjax("/userChattable", param, 'post');
