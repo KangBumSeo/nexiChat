@@ -21,16 +21,22 @@
 		//whenSuccess_1(test0, updateYn, ynMap);
 		//mainClick();
 		
+		var oldTableName = "";
 		updateChk();
-		updateOk();
+		//updateOk();
 		deleteChk();
 		reload_data("/chatselectAll");
+
 	});
 
-	function updateOk() {
-		
+	function updateOk(fnOldTableName) {
 		$(document).on("click", "#comBtn", function(e){
-			alert("확인 버튼 클릭");
+			console.log(fnOldTableName);
+			var con = confirm("수정하시겠습니까?");
+			if (!con) {
+				return false;
+			};
+
 			var thVal = $('#data_table > thead > tr > th ');
 			console.log($('#data_table > thead > tr > th '));
 			//console.log($('#data_table > thead > tr > th ')[0].innerHTML);
@@ -85,7 +91,7 @@
 		//	console.log(test);
 			//console.log( $(cTarget[0].childNodes[1]).find("input")[0].value );
 			var uParam = {};
-			for (i=1; i<uVal.length; i++) {
+			for (i=1; i<uVal.length-1; i++) {
 				var updateKey = arrTemp[i]
 				var updateVal = document.getElementById(uVal[i]).childNodes[0].value;
 			//	console.log("updateVal >>> : " + updateVal);
@@ -97,18 +103,65 @@
 				//uParam.updateKey = updateVal;
 
 				}
+
 			var seq = $('#data_table > thead > tr > th ')[0].id;
-		//	$('seq_'+index+' > input').val();
-			var seqVal = document.getElementById(uVal[0]).childNodes[0].text;
-		//	var seqVal = $('#seq_44 > a')[0].text;
-		//	console.log(seq);
-		//	console.log(seqVal_1);
+			//	$('seq_'+index+' > input').val();
+				var seqVal = document.getElementById(uVal[0]).childNodes[0].text;
+				var newTableName = uParam.subject + uParam.userid;
+			//	var seqVal = $('#seq_44 > a')[0].text;
+			//	console.log(seq);
+			//	console.log(seqVal_1);
+		/* 	 	var idate = $('#data_table > thead > tr > th ')[3].id;
+			 	var date = new Date();
+			 	var year = date.getFullYear();
+			 	var month = ('0'+(date.getMonth()+1)).slice(-2);
+			 	var date = ('0'+date.getDate()).slice(-2);
+				var idateVal = year+'-'+month+'-'+date;
+				uParam[idate] = idateVal; */
+				uParam[seq] = seqVal;
+				uParam["otName"]=fnOldTableName;
+				uParam["ntName"]=newTableName;
+
+
+
+
+				
+			// 채팅방 수정 중복체크
+			var dParam = {'key': 'userid', 'value' : uParam.userid};
+			var dResult = chatAjax('/chatupdateDup', {"id" : uParam.userid}, 'post');
+
+			if (dResult == 0) {
+				alert("존재하지 않는 사용자 입니다.");
+				return false;
+
+			}else {
+				dResult = chatAjax('/chatselect', dParam, 'post');
+				//console.log(dResult.get(0).get("subject"));
+				console.log("듑 else 절 result>>>>>>>.");
+				console.log(dResult);
+				console.log(dResult[0].USERID);
+				console.log(dResult[0].SUBJECT);
+				var dSubject = dResult[0].SUBJECT;
+				if (dSubject == uParam.subject) {
+					alert("해당 유저는 채팅방이 이미 존재합니다.");
+					return false;
+				}
+
+				dResult = chatAjax('/chatupdateok', uParam, 'post');
+				
+				if(dResult === 0 ){
+					alert('fail');
+					return;
+				}
+				else{
+					alert("success")
+				reload_data("/chatselectAll");	
+				}
+			};
 			
-			uParam[seq] = seqVal;
-			console.log(uParam);
+
 			
-			chatAjax('/chatupdateok', uParam, 'post');
-			reload_data("/chatselectAll");	
+			
 			});
 			
 		};
