@@ -494,10 +494,11 @@
 	      
 	      }   */
 	   }
-layerOpen.sel = function( id , chatSeq ){
+layerOpen.in = function( id , chatSeq ){
+	
 } 	
 	
-layerOpen.in = function(id,chatSeq){
+layerOpen.sel = function(id,chatSeq){
 	    	$("#"+id).on("mouseover", function(){
 	         console.log("click");
 
