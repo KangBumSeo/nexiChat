@@ -56,7 +56,6 @@
 			}
 		});
 
-		
 		$("#chat_submit").off().click(function(){
 			var chat_conv = $("#userconv").val();
 			console.log(chat_conv);
