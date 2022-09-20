@@ -18,7 +18,7 @@
 <script type="text/javascript">
 //location.pathname = "/";
 	//history.replaceState({}, null, location.pathname);
-	history.pushState(null, null, '/');
+//	history.pushState(null, null, '/');
 
 	var chatSeq = '${chatSeq}';
 	var chatTname = '${chatTname}';
@@ -35,8 +35,8 @@
 		delCheck();
 	//	delReset();
 		chatExit(sessionId, chatSeq);
-		layerOpen('memSelPop', chatSeq);
-		layerOpen('memInPop', chatSeq);
+		layerOpen('memSelPop', chatSeq , 'sel');
+		layerOpen('memInPop', chatSeq , 'in');
 		$("#chat_main").scrollTop($("#chat_main")[0].scrollHeight);
 
 		$(document).on("keyup click", "#userconv", function(key){
@@ -461,7 +461,6 @@
 		return successResult;
 
 	}
-	
 
 	function layerOpen(id, chatSeq , click_yn ) {
 	      console.log("hi");
@@ -471,6 +470,34 @@
 	      layerOpen.setClickYn = function() { clickYn = 'N'; }
 	      layerOpen.clickReset = function() { clickYn = 'Y'; }
 	      */
+		  // click_yn : in , sel
+
+		  if(click_yn === 'in'){
+			layerOpen.in(id,chatSeq);
+		  }
+		  else if( click_yn === 'sel' ){
+			layerOpen.sel(id,chatSeq);
+		  }
+	      
+	      //$("#layerClose").on("click", function(){
+	      $("#"+id).on("mouseout", function(){
+	         $("#userList").remove();
+	         $("#SelPop").hide();
+	         $("#layerPop").hide();
+	         $("#layerPop").val("N");
+	         $("#userList").remove();
+	      });
+	      
+	      /* 
+	        if($("#layerPop").val() === 'Y') {
+	         
+	      
+	      }   */
+	   }
+layerOpen.sel = function( id , chatSeq ){
+} 	
+	
+layerOpen.in = function(id,chatSeq){
 	    	$("#"+id).on("mouseover", function(){
 	         console.log("click");
 
@@ -485,35 +512,21 @@
 	         var userResult = chatAjax("/userChattable", param, 'post');
 	         console.log(userResult);
 	         
-	         if(userResult.length > 0) {
-	            html  = '<div id=userList>';
+	         if( userResult ) {
+	            html  = '<div id="userList">';
 	            $.each(userResult, function(i,v){
-	               var memId = v.GUESTID;      
-	               html += '<div id="index" style="float: left; width: 50%;">'+i+'</div>';
+	               var memId = v.GUESTID;
+				   var index = i+1;
+				   if( memId != '' && memId != null ) {
+	               html += '<div id="index" style="float: left; width: 50%;">'+index+'</div>';
 	               html += '<div id="memId" style="float: left; width: 50%;">'+memId+'</div>';      
+				   }
 	            });
 	            html += '</div>';
 	            $("#memberchat").append(html);
 	         }         
 	      });
-	      
-	      //$("#layerClose").on("click", function(){
-	      $("#"+id).on("mouseout", function(){
-	         console.log("closeBtn");
-	         
-	         $("#layerPop").hide();
-	         $("#layerPop").val("N");
-	         console.log($("#layerPop").val());
-	         $("#userList").remove();
-	      });
-	      
-	      /* 
-	        if($("#layerPop").val() === 'Y') {
-	         
-	      
-	      }   */
-	   }
-	
+}	
 	
 	   
    function chatExit(sessionId, chatSeq) {
