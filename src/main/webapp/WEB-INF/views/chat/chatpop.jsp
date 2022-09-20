@@ -168,7 +168,7 @@
 				delImg_name = "del_otherimg";
 				
 			}
-
+ 
 
 			// 대화와 사진 데이터 붙이기
 			if ( seq+id === beforeDiv ){
