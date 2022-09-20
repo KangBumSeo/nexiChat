@@ -235,10 +235,11 @@ public class ChatController {
 	public int chatUserCheck(@RequestBody HashMap<String, Object> cParam) {
 		logger.info("ChatController chatUserCheck 시작  >> :");
 		System.out.println("cParam>>> : " + cParam);
-		int nCnt = ns.nexiChat(cParam).size();
-		logger.info("nCnt >>> : " + nCnt);
+	
+		int tableChk = ns.nexiChat(cParam).size();
+		logger.info("tableChk >>> : " + tableChk);
 
-		return nCnt;
+		return tableChk;
 	}
 
 	// Insert 시작

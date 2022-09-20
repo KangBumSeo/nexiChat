@@ -204,7 +204,7 @@ table.type08 td {
 		};
 		
 	
-		var cParam = {'key':'userid', 'value':userid}
+		var cParam = {'key':'tablechk', 'userid':userid, 'subject' :subject}
 		var uCheck = chatAjax('/chatUserCheck', cParam, 'post');
 
 		if ( uCheck === 1) {
@@ -250,9 +250,9 @@ table.type08 td {
 
 
 	 		if(selOption === 'public') {	 	 		
-				chatTypeHtml(sessionId, chat, 'Y', userReturn, 'public');
+				chatTypeHtml(sessionId, chat, 'Y', userReturn, 'O');
 	 		 }else if(selOption === 'private'){
-	 			chatTypeHtml(sessionId, chat, 'N', userReturn, 'private');
+	 			chatTypeHtml(sessionId, chat, 'N', userReturn, 'C');
 		 	}else{
 		 		chatTypeHtml(sessionId, chat, "", userReturn);
 			}		

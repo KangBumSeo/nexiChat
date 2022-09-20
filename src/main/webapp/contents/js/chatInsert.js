@@ -130,7 +130,9 @@ function buttonSel(chatType) {
 		var userid = sessionId;
 		var tableName = subject + userid	
 		var guestid = [];
-		var status = 'O';
+		var status = chatType;
+		
+		console.log("status >>>> : " + status);
 		
 		console.log(subject);
 		var chkUser = $(':checkbox:checked');
@@ -156,7 +158,7 @@ function buttonSel(chatType) {
 				'status': status
 		}
 
-	//	var insertResult = chatAjax('/chatinsertdata', iParam, 'post');
+		var insertResult = chatAjax('/chatinsertdata', iParam, 'post');
 
 		alert("채팅방이 생성되었습니다.");
 		console.log(insertResult);

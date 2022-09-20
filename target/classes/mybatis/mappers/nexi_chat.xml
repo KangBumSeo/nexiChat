@@ -81,6 +81,10 @@
 			<when test= "key == 'idate'">
 				AND TO_DATE(${key}, 'YYYY-MM-DD') BETWEEN #{startdate, jdbcType=VARCHAR} AND #{enddate, jdbcType=VARCHAR} 
 			</when>
+			<when test= "key == 'tablechk'">
+				and SUBJECT = #{subject}
+				and USERID = #{userid}
+			</when>
 			<otherwise>
 				AND ${key} LIKE '%' || #{value, jdbcType=VARCHAR} || '%' 
 			</otherwise>
@@ -91,7 +95,7 @@
 	</select>
 	
 	<select id="nexiChatSeqchk" parameterType="HashMap" resultType="HashMap">
-		SELECT SEQ.NEXTVAL FROM DUAL
+		SELECT TO_CHAR(SEQ.NEXTVAL) AS NEXTVAL FROM DUAL
 	</select>
 	
 	<insert id="nexiChatInsert" parameterType="HashMap">
