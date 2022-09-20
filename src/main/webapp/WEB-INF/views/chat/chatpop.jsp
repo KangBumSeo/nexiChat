@@ -491,7 +491,7 @@ layerOpen.in = function( id , chatSeq ){
 	var param = {'id' : sessionId}
 	var userData = chatAjax('/userSelect', param, 'post');
 	$("#SelPop").show();
-	$('#SelPop').css('width','800px');
+	$('#SelPop').css('width','750px');
 	$("#pvHtml").remove();
 	chatTypeHtml( sessionId , 'memberchat' , 'N' , userData , 'U' );
 	});
