@@ -28,7 +28,7 @@ function  chatTypeHtml ( sessionId, targetId, type_yn  , userReturn , chatType){
 				pbHtml +='		</div>';
 				pbHtml +='	</div>';
 				pbHtml +='</div>'
-				$("#chat").append(pbHtml);
+				$("#"+targetId).append(pbHtml);
 		}
 			var pvHtml = "";
 				pvHtml += '<div class="chat content_body" id="pvHtml">';
@@ -72,7 +72,7 @@ function  chatTypeHtml ( sessionId, targetId, type_yn  , userReturn , chatType){
 				
 				pvHtml += '</div>';
 				
-				$("#chat").append(pvHtml);
+				$("#"+targetId).append(pvHtml);
 				
 				$.each(userReturn, function(i, v){
 					var userId = v.USERID
@@ -160,8 +160,15 @@ function buttonSel(chatType) {
 
 		var insertResult = chatAjax('/chatinsertdata', iParam, 'post');
 
-		alert("채팅방이 생성되었습니다.");
-		console.log(insertResult);
+		if(insertResult) {
+			alert("채팅방이 생성되었습니다.");
+			console.log(insertResult);
+			location.href = "/";
+		}else{
+			alert("채팅방이 생성되지 않았습니다.");
+			return;
+		}
+		
 		
 	});
 }
