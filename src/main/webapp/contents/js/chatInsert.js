@@ -5,7 +5,7 @@ function  chatTypeHtml ( sessionId, targetId, type_yn  , userReturn , chatType){
 /*	$("#pbHtml").remove();
 	$("#pvHtml").remove();*/
 	if ( type_yn != ""){	
-		
+		 
 		if( type_yn === 'Y' ){
 			var pbHtml = "";
 				pbHtml +='<div  id="pbHtml">'
