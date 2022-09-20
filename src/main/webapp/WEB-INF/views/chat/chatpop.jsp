@@ -495,7 +495,10 @@
 	      }   */
 	   }
 layerOpen.in = function( id , chatSeq ){
-	chatTypeHtml( '' , 'memberchat' , '' , userData , 'Y' );
+	var param = {'id' : sessionId}
+	var userData = chatAjax('/userSelect', param, 'post');
+}
+	chatTypeHtml( sessionId , 'memberchat' , '' , userData , 'Y' );
 } 	
 	
 layerOpen.sel = function(id,chatSeq){
