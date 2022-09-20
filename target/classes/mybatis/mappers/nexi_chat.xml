@@ -43,6 +43,8 @@
 				, SUBJECT
 				, USERID
 				, IDATE
+				, TABLENAME
+				, STATUS
 		FROM NEXI_CHAT
 		WHERE DELETEYN = 'N'
 		ORDER BY TO_NUMBER(SEQ) DESC
@@ -75,6 +77,8 @@
 				, SUBJECT
 				, USERID
 				, IDATE
+				, TABLENAME
+				, STATUS
 		FROM NEXI_CHAT
 		WHERE DELETEYN = 'N'
 		<choose>
@@ -304,6 +308,9 @@
 			, DELYN
 	FROM NEXI_SIGNUP
 	WHERE USERID NOT IN #{id, jdbcType=VARCHAR}
+		<if test= "key !=null and key == 'U' and value !=null and value != '' ">
+			AND USERID LIKE '%' || #{value, jdbcType=VARCHAR} || '%'
+		</if>
 	</select>
 	
 	

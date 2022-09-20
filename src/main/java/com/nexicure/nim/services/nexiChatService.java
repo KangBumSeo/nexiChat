@@ -47,15 +47,28 @@ public class nexiChatService implements nexiChatServiceInterface {
 	public int nexiChatSeqchk(HashMap<String, Object> iParam) throws SQLException, Exception {
 		// TODO Auto-generated method stub
 		logger.info("nexiChatService nexiChatSeqchk() 진입 >>> : ");
+		String status = (String) iParam.get("status");
+		String userid = (String) iParam.get("userid");
+		System.out.println("status >>> : " + status);
+		System.out.println("status >>> : " + status.getClass().getName());
 
 		HashMap<String, Object> seq = nd.nexiChatSeqchk(iParam);
-		System.out.println("chatseq >>>> : " + seq.get("NEXTVAL"));
+		
+		String chatSeq = (String) seq.get("NEXTVAL");
+		System.out.println("chatseq >>>> : " + chatSeq);
+		
 		iParam.put("chatseq", seq.get("NEXTVAL"));
-
-		String status = (String) iParam.get("status");
-
+		
+		if(status.equals("C")) {
+			 System.out.println("status C!!!!!!"); 
+			 iParam.put("subject", chatSeq);
+			 iParam.put("tableName", userid+"_"+chatSeq); 
+			 iParam.put("fileTableName", userid+"_"+chatSeq+"_file"); 
+		}
+		  
+		System.out.println("status ::::: " + status + "iParam ::::: " + iParam);
 		int nCnt = nexiChatInsert(iParam);
-
+				 
 		return nCnt;
 	}
 

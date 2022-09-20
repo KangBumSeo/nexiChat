@@ -10,6 +10,7 @@
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-latest.js"></script> 
 <script type="text/javascript" src="/contents/js/nCommon.js"></script>
+<script type="text/javascript" src="/contents/js/chatInsert.js"></script>
 <%
 	String sessionName = (String)session.getAttribute("username");
 	String sessionId = (String)session.getAttribute("userid");
@@ -125,8 +126,8 @@
 
 	function conData(fnCon) {
 
-		$('#container > #chat_main > #main_text').remove();
-		html = 	'<div class="main_text" id="main_text">';
+		$('#container > div > div > #chat_main > #main_text').remove();
+		var html = 	'<div class="main_text" id="main_text">';
 			for(i = fnCon.length; i > 0; i--) {
 			}
 			console.log(fnCon);
@@ -480,14 +481,6 @@
 		  }
 	      
 	      //$("#layerClose").on("click", function(){
-	      $("#"+id).on("mouseout", function(){
-	         $("#userList").remove();
-	         $("#SelPop").hide();
-	         $("#layerPop").hide();
-	         $("#layerPop").val("N");
-	         $("#userList").remove();
-	      });
-	      
 	      /* 
 	        if($("#layerPop").val() === 'Y') {
 	         
@@ -495,41 +488,49 @@
 	      }   */
 	   }
 layerOpen.in = function( id , chatSeq ){
+	$("#"+id).on("click", function(){
 	var param = {'id' : sessionId}
 	var userData = chatAjax('/userSelect', param, 'post');
-}
-	chatTypeHtml( sessionId , 'memberchat' , '' , userData , 'Y' );
+	$("#SelPop").show();
+	$("#pvHtml").remove();
+	chatTypeHtml( sessionId , 'memberchat' , 'N' , userData , 'Y' );
+	});
 } 	
 	
 layerOpen.sel = function(id,chatSeq){
-	    	$("#"+id).on("mouseover", function(){
-	         console.log("click");
+    $("#"+id).on("mouseover", function(){
+         $("#userList").remove();
+         $("#pvHtml").remove();
+         
+         $("#SelPop").show();
+        param = {"chatSeq":chatSeq}
+         
+         var userResult = chatAjax("/userChattable", param, 'post');
+	         
+         if( userResult ) {
+            html  = '<div id="userList">';
+            $.each(userResult, function(i,v){
+               var memId = v.GUESTID;
+			   var index = i+1;
+			   if( memId != '' && memId != null ) {
+               html += '<div id="index" style="float: left; width: 50%;">'+index+'</div>';
+               html += '<div id="memId" style="float: left; width: 50%;">'+memId+'</div>';      
+			   }
+            });
+            html += '</div>';
+            $("#memberchat").append(html);
+         }     
 
+         $("#"+id).on("mouseout", function(){
+	         //$("#userList").remove();
+	         $("#SelPop").hide();
+	         $("#layerPop").hide();
+	         $("#layerPop").val("N");
 	         $("#userList").remove();
-	         $("#SelPop").show();
-	         console.log($("#"+id).val());
-	         //$("#"+id).val("Y");
-	         console.log($("#"+id).val());
-	         
-	        param = {"chatSeq":chatSeq}
-	         
-	         var userResult = chatAjax("/userChattable", param, 'post');
-	         console.log(userResult);
-	         
-	         if( userResult ) {
-	            html  = '<div id="userList">';
-	            $.each(userResult, function(i,v){
-	               var memId = v.GUESTID;
-				   var index = i+1;
-				   if( memId != '' && memId != null ) {
-	               html += '<div id="index" style="float: left; width: 50%;">'+index+'</div>';
-	               html += '<div id="memId" style="float: left; width: 50%;">'+memId+'</div>';      
-				   }
-	            });
-	            html += '</div>';
-	            $("#memberchat").append(html);
-	         }         
+	         $("#pvHtml").remove();
 	      });
+	          
+    });
 }	
 	
 	   
@@ -762,6 +763,103 @@ layerOpen.sel = function(id,chatSeq){
     width: 20px;
     height: 22.9px;
 
+}
+
+
+/* -----------------------------Ãß°¡-----------------------------------~*/
+.chat{
+	width: 500px;
+	height: 43.5px;
+	background: #bccae7;
+	font-weight: bold;
+	
+}
+
+
+.content_sub_header{
+    background:#eee;
+ 
+}
+
+.select{
+	height: 100%;
+	float: left;
+	margin-left: 50px;
+}
+
+
+.content_title{
+    float: left;
+    width: 25%;
+    font-size: larger;
+    padding: 10px;
+	border: 1px solid #ccc;
+    height: 100%;
+
+}
+
+.content_in{
+	float: left;
+    width: 25%;
+    font-size: larger;
+    font-weight: 500;
+    padding: 10px;
+	border: 1px solid #ccc;
+    height: 100%;
+
+}
+
+.no_top {
+	border-top : 0px;
+
+}
+
+.no_left{
+	border-left : 0px;
+}
+
+
+
+.content_body{
+    background: #f7f7f7;
+    padding: 0px 20px;
+    height: 500px;
+}
+
+.content_body_main{
+    height: auto;
+    text-align: center;
+    width: 45%;
+    float: left;
+
+}
+
+.content_body_line{
+	height: 35.5px;
+	width: 100%;
+}
+
+.content_body_detail{
+    float: left;
+    width: 41%;
+	/* height: 100%; */
+    padding: 10px;
+
+}
+
+.chk{
+	width: 39%;
+    height: 100%;
+    padding: 4px;
+}
+
+
+.chat_info{
+    height: 100%;
+    float: left;
+    width: 40%;
+    padding: 10px;
+    /* border: 1px solid; */
 }
 
 

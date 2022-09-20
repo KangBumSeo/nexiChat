@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="/contents/css/bootstrap-datepicker3.css">
 <link rel="stylesheet" href="/contents/css/bootstrap-datepicker3.standalone.css">
 <script type="text/javascript" src="/contents/js/nCommon.js"></script>
+<script type="text/javascript" src="/contents/js/chatmain.js"></script>
 <script src="/contents/js/bootstrap-datepicker.js"></script>
 <script src="/contents/js/bootstrap-datepicker.kr.min.js"></script>
 <%
@@ -88,6 +89,7 @@
 			
 		});
 
+	//	enterSelect('searchSel');
 		
 		$(document).on("keypress", "#searchSel", function(e) {
 			if (e.keyCode == 13) {
