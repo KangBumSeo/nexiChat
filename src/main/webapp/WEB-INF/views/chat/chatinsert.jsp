@@ -250,9 +250,9 @@ table.type08 td {
 
 
 	 		if(selOption === 'public') {	 	 		
-				chatTypeHtml(sessionId, chat, 'Y', userReturn, 'O');
+				chatTypeHtml(sessionId, 'chat', 'Y', userReturn, 'O');
 	 		 }else if(selOption === 'private'){
-	 			chatTypeHtml(sessionId, chat, 'N', userReturn, 'C');
+	 			chatTypeHtml(sessionId, 'chat', 'N', userReturn, 'C');
 		 	}else{
 		 		chatTypeHtml(sessionId, chat, "", userReturn);
 			}		
@@ -265,82 +265,6 @@ table.type08 td {
 
 	
  	}
-
-
-
- 	function userChoose(index, htmlId, chatType){
-	
-		var clicktarget ="chkUser_"+index;  
-		var userSeltarget = "userSel_"+index;
-		console.log(clicktarget)
-		console.log(userSeltarget);
-		console.log("chatType >>>> : " + chatType);
-		
-		$("#"+clicktarget ).click(function(e){
-		//	console.log(e.target.id)
-			var target_index = (e.target.id).split('_')[1];
-			var userid = $('#userId_'+target_index).text();
-			var delYn = $('#delYN_'+target_index).text();
-			
-			console.log(userid);
-			console.log(delYn);
-			console.log($("#pvbodyChk").find("#userId_"+target_index).length);
-			
-			if ($("#pvbodyChk").find('#userId_'+target_index).length === 0){
-			//var chk = e;
-
-			userSelHtml(htmlId, userid, delYn, 'N', index);
-				
-			}else{
-			$("#pvbodyChk > #"+userSeltarget ).remove();
-			}
-			
-		});
-			buttonSel(chatType);
-
-	/* 	$("#userSubmit").off().click(function(e){
-			console.log("userSubmit 클릭 ==================");
-
-	 		var subject = $.trim($("#subject").val());
-			var userid = sessionId;
-			var tableName = subject + userid	
-			var status = 'O';
-			
-			console.log(subject);
-			var chkUser = $(':checkbox:checked');
-			if(chkUser.length === 0) {
-				alert("추가할 사용자를 선택하세요");
-				return;
-			}
-			
-			$.each(chkUser, function(i,v){
-				var chkNum = v.id.split('_')[1];
-				var chkUser = $("#userId_"+chkNum)[0].innerText;
-				guestid.push(chkUser);
-			});
-			guestid.push(sessionId);
-			console.log(guestid);
-
-			var iParam = {
-					'subject':subject,
-					'userid':userid,
-					'tableName':tableName,
-					'fileTableName':tableName+'_file',
-					'guestid':guestid,
-					'status': status
-			}
-
-			var insertResult = chatAjax('/chatinsertdata', iParam, 'post');
-
-			
-			//alert("채팅방이 생성되었습니다.");
-			console.log(insertResult);
-			
-		}); */
-
- 	}
-
-
 
 </script>
 </head>
