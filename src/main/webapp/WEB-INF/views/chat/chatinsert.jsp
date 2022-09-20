@@ -250,11 +250,9 @@ table.type08 td {
 
 
 	 		if(selOption === 'public') {	 	 		
-				chatTypeHtml(sessionId, chat, 'Y', userReturn);
-				userChoose('public');	
+				chatTypeHtml(sessionId, chat, 'Y', userReturn, 'public');
 	 		 }else if(selOption === 'private'){
-	 			chatTypeHtml(sessionId, chat, 'N', userReturn);
-	 			userChoose('private');
+	 			chatTypeHtml(sessionId, chat, 'N', userReturn, 'private');
 		 	}else{
 		 		chatTypeHtml(sessionId, chat, "", userReturn);
 			}		

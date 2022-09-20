@@ -80,7 +80,7 @@ function  chatTypeHtml ( sessionId, targetId, type_yn  , userReturn , chatType){
 					
 					userSelHtml('pvbody', userId, delYN, 'Y', i);
 				
-					userChoose(i, 'pvbodyChk')
+					userChoose(i, 'pvbodyChk', chatType)
 		
 				});
 			
