@@ -37,17 +37,7 @@
 
 		mainClick();
 
-
-		$("#datePicker_0").datepicker({
-				format: "yyyy-mm-dd",
-				todayHightlight :true
-			});
-
-		
-		$("#datePicker_1").datepicker({
-			format: "yyyy-mm-dd",
-			todayHightlight :true
-		});
+	
 	
 	
 
@@ -77,11 +67,87 @@
 		$("#selectBox").change(function(){
 			key = $("#selectBox option:selected").val();
 			console.log("key >>> : " + key);
+			if (key == 'idate'){
+				$("#select").replaceWith('<div id="date" style="float: left; margin-left: 50px;"><input type="text" class="dateSearch" id="datePicker_0"> <a style="float: left;">-</a> <input type="text" class="dateSearch" id="datePicker_1"></div>');
+
+				$("#datePicker_0").datepicker({
+					format: "yyyy-mm-dd",
+					todayHightlight :true
+				});
+
+			
+				$("#datePicker_1").datepicker({
+					format: "yyyy-mm-dd",
+					todayHightlight :true
+				});
+			}else{
+				$("#date").replaceWith('<div id="select" style="float: left; margin-left: 50px;"><input type="text" name="searchSel" id="searchSel"></div>');
+				
+				
+			}
+			
 		});
 
 		
 		$(document).on("keypress", "#searchSel", function(e) {
 			if (e.keyCode == 13) {
+
+				if (key == 'idate') {
+					var startDate = $("#datePicker_0").val();
+					var endDate = $("#datePicker_1").val();
+
+					if (value === "") {
+						alert("검색할 내용을 입력하세요!");
+						$("#searchSel").focus();
+						return;
+					}
+
+					$('#chat_data').empty();
+					var cParam = { "key" : key, "startdate" : startDate, "enddate" : endDate};
+					var test = chatAjax('/chatselect', cParam ,'post');
+					console.log(test);
+
+					whenSuccess(test);	
+				}else{
+					var value = $.trim($("#searchSel").val());	
+					
+					if (value === "") {
+						alert("검색할 내용을 입력하세요!");
+						$("#searchSel").focus();
+						return;
+					}
+
+					$('#chat_data').empty();
+					var cParam = { "key" : key, "value" : value};
+					var test = chatAjax('/chatselect', cParam ,'post');
+					console.log(test);
+
+					whenSuccess(test);		
+				}				
+			}
+		});
+		
+
+		$("#search_btn").off().click( function(e){		
+			if (key == 'idate') {
+				var startDate = $("#datePicker_0").val();
+				var endDate = $("#datePicker_1").val();
+				console.log(startDate);
+				console.log(endDate);
+
+				if (value === "") {
+					alert("검색할 내용을 입력하세요!");
+					$("#searchSel").focus();
+					return;
+				}
+
+				$('#chat_data').empty();
+				var cParam = { "key" : key, "startdate" : startDate, "enddate" : endDate};
+				var test = chatAjax('/chatselect', cParam ,'post');
+				console.log(test);
+
+				whenSuccess(test);	
+			}else{
 				var value = $.trim($("#searchSel").val());	
 				
 				if (value === "") {
@@ -95,25 +161,8 @@
 				var test = chatAjax('/chatselect', cParam ,'post');
 				console.log(test);
 
-				whenSuccess(test);			
-			}
-		});
-		
-
-		$("#search_btn").off().click( function(e){		
-			var value = $.trim($("#searchSel").val());	
-			if (value === "") {
-				alert("검색할 내용을 입력하세요!");
-				$("#searchSel").focus();
-				return;
-			}
-
-			$('#chat_data').empty();
-			var cParam = { "key" : key, "value" : value};
-			var test = chatAjax('/chatselect', cParam ,'post');
-			console.log(test);
-
-			whenSuccess(test);
+				whenSuccess(test);		
+			}				
 			
 		});
 	}
@@ -134,9 +183,13 @@
 	function chatPopup (fnSeq, fnTname, fnUserid) {
 		if (sessionId != 'null') {
 			var windowCheck;
-			var options = 'top=100, left=1400, width=594, height=600, location=no resizable=no';
+			var options = 'top=100, left=1400, width=594, height=610, location=no resizable=no';
 		
 			windowCheck = window.open('/chatpop?seq='+fnSeq+'&'+'subject='+fnTname+'&'+'userid='+fnUserid, 'chatpop', options);
+
+			console.log("seq ::::: " + fnSeq + "\n" + "userid :::::: " + sessionId);
+			param = {"chatseq" : fnSeq, "guestid" : sessionId}
+			chatAjax("/userChattable", param, 'post');
 		}else{
 			alert("로그인 하세요");
 		}
@@ -147,6 +200,15 @@
 
 </head>
 <style>
+/* .exitselect{
+	display: block;
+	color: red;
+}
+.initSelect:hover{
+	display: none;
+	color: black; */
+}
+
 table.type08 {
   border-collapse: collapse;
   text-align: left;
@@ -179,6 +241,12 @@ table.type08 td {
   border-bottom: 1px solid #ccc;
 }
 
+.dateSearch {
+	float: left;
+	display: block;
+	height: 19px;
+}
+
 </style>
 <body>
 <div class="section" style="width:50%, float:left;">
@@ -197,17 +265,22 @@ table.type08 td {
 						<option value="userid">방장</option>
 						<option value="idate">날짜</option>
 					</select>
+					<!-- 
+					<div id="date">
+						<input type="text" id="datePicker_0">
+						-
+						<input type="text" id="datePicker_1">
 					</div>
-					<div style="float: left; margin-left: 50px;">
+					 -->	
+					</div>
+					<div id="select" style="float: left; margin-left: 50px;">
 						<input type="text" name="searchSel" id="searchSel">
 					</div>
 					<div>
 						<input type="button" name="search_btn" id="search_btn" value="검색">
 					</div>
 					<div>
-						<input type="text" id="datePicker_0">
-						-
-						<input type="text" id="datePicker_1">
+						
 					</div>
 				</th>
 			</tr>

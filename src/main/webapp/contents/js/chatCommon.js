@@ -89,17 +89,28 @@
 		
 	
 		function updateChk() {
+			
 			$(document).on("click", "#upBtn", function(e){
+				
+				var arrTemp = [];
+				var thVal = $('#data_table > thead > tr > th ');
+				var id = $(e.target.parentElement.parentElement);//tr
+				
+				//oldTableName
+				var tNameVal_1 = id[0].childNodes[1].innerHTML;
+				var tNameVal_2 = id[0].childNodes[2].innerHTML;
+				oldTableName = tNameVal_1+tNameVal_2
+				
+				console.log(oldTableName);
+				
 				//기존에 input을 text로 변경 작업 
 				var inputVal = $('#chat_data').find('a').parent().parent();
 			//	var inputVal = $("a[name=seq]");
 				console.log(inputVal);
 				var changeVal = $(e.target.parentElement.parentElement);
-				input_change(inputVal );
-				
-				var arrTemp = [];
-				var thVal = $('#data_table > thead > tr > th ');
-				var id = $(e.target.parentElement.parentElement);//tr
+				input_change(inputVal );			
+
+			
 	
 				//console.log(id[0].childNodes);//td
 				//console.log(id.parent());
@@ -140,7 +151,7 @@
 					console.log(tempValue.indexOf('input'))
 					console.log(tempValue.indexOf('button'))
 					// 확인 작업 
-					*/				
+					*/	
 
 					if( tempValue.indexOf('button') === -1 //tempValue.split('button').length === 1
 					 && tempValue.indexOf('input') === -1
@@ -149,8 +160,10 @@
 						//arrTemp[i]
 					//this.innerHTML = '<input style="width:80%;" value="'+tempValue+'" id="'+uVal[i]+'" />';
 												
-						if (i != 0  ) {
+						if (i != 0 && i != 3  ) {
 							this.innerHTML = '<input style="width:80%;" name="val" value="'+tempValue+'" />';
+						}else if(i == 3){
+							this.innerHTML = '<a style="width:80%;" name="val">'+tempValue+'</a>';
 						}else{
 							this.innerHTML = '<a style="width:80%;" name="seq">'+tempValue+'</a>';
 						}
@@ -158,6 +171,9 @@
 						
 				}); //foreach 끝					
 			//	console.log($("a[name=seq]").length);
+			
+			updateOk(oldTableName);	
+				
 			});
 		};
 		
@@ -172,16 +188,16 @@
 				var tname = delTarget[0].childNodes[1].innerHTML;
 				var uid = delTarget[0].childNodes[2].innerHTML;
 				var tableName = tname + uid
-				var dParam = {'seq':seq};
+				var dParam = {'seq':seq , "tableName":tableName, "fileTableName" : tableName+'_file'};
 				var con = confirm("삭제하시겠습니까?");
 				if (!con) {
 					return false;
 				}
 				var deleteOk = chatAjax('/chatdelete', dParam, 'post');
-				if(deleteOk) {
-					var tdParam = {"tableName":tableName}
+				/*if(deleteOk) {
+					var tdParam = {"tableName":tableName, "fileTableName" : tableName+'_file'}
 					chatAjax('/chatTableDrop', tdParam, 'post');
-				}
+				}*/
 				reload_data();
 			});
 		}

@@ -337,7 +337,7 @@ box-shadow: inset -4px 0px 5px 0px rgba(0,0,0,0.45);
 	float: right;
 }
 
-input[type="password"] {height:25px;border:1px solid #ddd;text-indent:10px;}
+input[type="password"] {height:18px;border:1px solid #ddd;text-indent:10px;}
 /* custom end */
 
 

@@ -83,14 +83,17 @@
 				<li><a href="#">채팅<span class="ar"></span></a>
 					<ul class="sidebar-submenu">
 						<!-- <a href="/chatmain"> 채팅 <span class="ar"></span></a> -->
-						<li><a id="test">채팅 검색<span class="ar"></span></a></li>
+						<li><a id="chat_select">전체 채팅 이력<span class="ar"></span></a></li>
 					</ul>
 					<ul class="sidebar-submenu">
-						<li><a id="chat_insert">채팅 등록<span class="ar"></span></a></li>
+						<li><a id="chat_insert">전체 채팅 등록<span class="ar"></span></a></li>
 					</ul>
 					<ul class="sidebar-submenu">
-						<li><a id="chat_update">채팅 수정<span class="ar"></span></a></li>
-					</ul>								
+						<li><a id="chat_update">전체 채팅 수정<span class="ar"></span></a></li>
+					</ul>		
+					<ul class="sidebar-submenu">
+						<li><a id="chat_in">현재 접속 채팅방<span class="ar"></span></a></li>
+					</ul>									
 				</li>
 				
 				<!--li class="active">

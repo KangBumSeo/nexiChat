@@ -58,6 +58,7 @@
 	 ORDER BY SEQ DESC
 	  -->
 	<select id="nexiChat" parameterType="HashMap" resultType="HashMap">
+		<!--  
 		SELECT 
 				  SEQ
 				, SUBJECT
@@ -67,6 +68,30 @@
 		WHERE ${key} LIKE '%' || #{value, jdbcType=VARCHAR} || '%'
 		AND DELETEYN = 'N'
 		ORDER BY TO_NUMBER(SEQ) DESC
+		-->
+		
+		SELECT 
+				 SEQ
+				, SUBJECT
+				, USERID
+				, IDATE
+		FROM NEXI_CHAT
+		WHERE DELETEYN = 'N'
+		<choose>
+			<when test= "key == 'idate'">
+				AND TO_DATE(${key}, 'YYYY-MM-DD') BETWEEN #{startdate, jdbcType=VARCHAR} AND #{enddate, jdbcType=VARCHAR} 
+			</when>
+			<otherwise>
+				AND ${key} LIKE '%' || #{value, jdbcType=VARCHAR} || '%' 
+			</otherwise>
+		</choose>	
+		ORDER BY TO_NUMBER(SEQ) DESC
+		
+		
+	</select>
+	
+	<select id="nexiChatSeqchk" parameterType="HashMap" resultType="HashMap">
+		SELECT SEQ.NEXTVAL FROM DUAL
 	</select>
 	
 	<insert id="nexiChatInsert" parameterType="HashMap">
@@ -76,23 +101,58 @@
 								, USERID
 								, IDATE
 								, DELETEYN
+								, TABLENAME
+								, STATUS
 							  ) 
 						VALUES (
-							    SEQ.NEXTVAL
+							   	 #{chatseq, jdbcType=VARCHAR}
 							    ,#{subject, jdbcType=VARCHAR}
 							    ,#{userid, jdbcType=VARCHAR}
-							    , TO_CHAR(SYSDATE,'YYYY-MM-DD HH24:MI:SS')
+							    , TO_CHAR(SYSDATE,'YYYY-MM-DD')
 							    , 'N'
+							    ,#{tableName, jdbcType=VARCHAR}
+							    ,#{status, jdbcType=VARCHAR}
 							)	
+	</insert>
+	
+	<insert id="nexichatTableSeq" parameterType = "HashMap">
+		CREATE SEQUENCE ${tableName}_SEQ
+		INCREMENT BY 1 
+		START WITH 1
+		MAXVALUE 1000000
+		MINVALUE 1
+		NOCYCLE 
+	</insert>
+	
+	<insert id="nexichatFileSeq" parameterType = "HashMap">
+		CREATE SEQUENCE ${fileTableName}_SEQ
+		INCREMENT BY 1 
+		START WITH 1
+		MAXVALUE 1000000
+		MINVALUE 1
+		NOCYCLE 
 	</insert>
 	
 	<insert id="nexichatTableInsert" parameterType="HashMap">
 		CREATE TABLE ${tableName} (
 	     SEQ		VARCHAR2(1000)	PRIMARY KEY 
 	    ,USERID		VARCHAR2(100)
-	    ,USERCS	VARCHAR2(1000)
+	    ,USERCS		VARCHAR2(1000)
 	    ,IDATE      VARCHAR2(100)
+	    ,DELYN 		VARCHAR2(1) DEFAULT 'N'
 	)	
+	</insert>
+	
+	<insert id="nexiFileTableInsert" parameterType="HashMap">
+		CREATE TABLE ${fileTableName}(
+				     SEQ 			VARCHAR2(1000) PRIMARY KEY
+				    ,TABLESEQ		VARCHAR2(1000)
+				    ,TEMPFILENAME   VARCHAR2(1000)
+				    ,ORIGINFILENAME VARCHAR2(1000)
+				    ,USERID			VARCHAR2(100)
+				    ,IDATE 			VARCHAR2(100)
+				    ,DELYN 			VARCHAR2(1) DEFAULT 'N'
+				)
 	</insert>
 	
 	<update id="nexiChatUpdateOk" parameterType="HashMap">
@@ -100,30 +160,59 @@
 		SET 
 			  SUBJECT = #{subject, jdbcType=VARCHAR}
 			, USERID = #{userid, jdbcType=VARCHAR}
-			, IDATE = TO_CHAR(SYSDATE,'YYYY-MM-DD HH24:MI:SS')
+			, IDATE = TO_CHAR(SYSDATE,'YYYY-MM-DD')
 		WHERE SEQ = #{seq, jdbcType=VARCHAR}
 	
 	</update>
 	
-	<delete id="nexiChatDelete" parameterType="HashMap">
-		DELETE NEXI_CHAT 
+	<select id="nexichatTableUpdate" parameterType="HashMap">
+		ALTER TABLE ${otName} RENAME TO ${ntName}	
+	</select>
+	
+	
+	<update id="nexiChatDelete" parameterType="HashMap">
+		UPDATE NEXI_CHAT
+		SET DELETEYN = 'Y'
 		WHERE SEQ = #{seq, jdbcType=VARCHAR}
-	</delete>
+	</update>
+	
+	
+	<insert id="nexiTableSeqDrop" parameterType="HashMap">
+		DROP SEQUENCE ${tableName}_SEQ
+	</insert>
+	
+		<insert id="nexiFileSeqDrop" parameterType="HashMap">
+		DROP SEQUENCE ${fileTableName}_SEQ
+	</insert>
 	
 	<insert id="nexichatTableDrop" parameterType="HashMap">
 		DROP TABLE ${tableName}
+	</insert>
+	
+	
+	<insert id="nexiFileTableDrop" parameterType="HashMap">
+		DROP TABLE ${fileTableName}
 	</insert>
 
 
 
 	<!-- ======================채팅 내용===================== -->
 	<select id="nexiConvSelect" parameterType="HashMap" resultType="HashMap">
+	
 		SELECT 
-				SEQ
-			, USERID
-			, USERCS 
-		FROM ${tableName}
-		ORDER BY TO_NUMBER(SEQ) DESC
+				  CHAT_TABLE.SEQ
+				, CHAT_TABLE.USERID
+				, USERCS
+				, TABLESEQ
+				, TEMPFILENAME 
+		
+		FROM ${tableName} CHAT_TABLE LEFT OUTER JOIN ${fileTableName} FILE_TABLE 
+		ON	CHAT_TABLE.SEQ = FILE_TABLE.SEQ
+		AND	CHAT_TABLE.USERID = FILE_TABLE.USERID
+		AND CHAT_TABLE.DELYN = 'N'
+		AND FILE_TABLE.DELYN = 'N'
+		ORDER BY TO_NUMBER(CHAT_TABLE.SEQ) DESC
+	
 	</select>
 	
 	<insert id="nexiConvInsert" parameterType="HashMap">
@@ -133,7 +222,7 @@
 				 , USERCS
 				 , IDATE 
  		)VALUES(
-		 		  CHAT_CONV_SEQ.NEXTVAL
+		 		  #{seq, jdbcType=VARCHAR}
 		 		, #{userid, jdbcType=VARCHAR}
 		 		, #{usercs, jdbcType=VARCHAR}
 		 		, TO_CHAR(SYSDATE,'YYYY-MM-DD HH24:MI:SS')
@@ -142,6 +231,26 @@
 	</insert>
 	
 	
+	
+	<update id="userConvDelete" parameterType="HashMap">
+		UPDATE ${tableName}
+		SET DELYN = 'Y'
+		WHERE SEQ IN
+		<foreach item="item" index="index" collection="seq"
+		      open="(" separator="," close=")">
+		#{item}
+		</foreach>	
+	</update>
+	
+	<update id="userFileDelete" parameterType="HashMap">
+		UPDATE ${fileTableName}
+		SET DELYN = 'Y'
+		WHERE TABLESEQ IN
+		<foreach item="item" index="index" collection="tableseq"
+		      open="(" separator="," close=")">
+		#{item}
+		</foreach>
+	</update>
 	
 	<!-- 
 	CREATE TABLE ${tableName} (
@@ -153,13 +262,13 @@
 	);
 	 -->
 	
-	<!--login -->
+	<!-- ======================로그인===================== -->
 	<select id="loginChat" parameterType="HashMap" resultType="HashMap">
 	SELECT 
 			  SEQ
 			, USERID
 			, USERNAME
-	FROM NEXI_CHAT_USER
+	FROM NEXI_SIGNUP
 	WHERE USERID = #{id, jdbcType=VARCHAR}
 		<if test="password != null and password != '' ">
 			AND USERPW = #{password, jdbcType=VARCHAR}
@@ -168,20 +277,140 @@
 		
 	<!--signup -->
 	<insert id="signUpInsert" parameterType="HashMap">
-	INSERT INTO NEXI_CHAT_USER(
+	INSERT INTO NEXI_SIGNUP(
 			 SEQ
 			,USERID
 			,USERPW
 			,USERNAME
 			,USERBIRTH
+			,DELYN
    ) VALUES(
    			 chat_user_seq.nextval
 			,#{id, jdbcType=VARCHAR}
 			,#{password, jdbcType=VARCHAR}
 			,#{name, jdbcType=VARCHAR}
 			,#{birth, jdbcType=VARCHAR}
+			,'N'
 	)
 	</insert>
 	
+	<select id="userSelect" parameterType="HashMap" resultType="HashMap">
+	SELECT 
+			  USERID
+			, DELYN
+	FROM NEXI_SIGNUP
+	WHERE USERID NOT IN #{id, jdbcType=VARCHAR}
+	</select>
 	
+	
+	
+	
+	
+	
+	<!-- fileupload -->
+	
+	<select id="nexiFileSeqCheck" parameterType="HashMap" resultType="HashMap">
+		SELECT ${tableName}_SEQ.NEXTVAL FROM dual
+	
+	</select>
+	<insert id="nexiFileUpload" parameterType="HashMap">
+		INSERT INTO ${fileTableName}(
+								  SEQ
+								, TABLESEQ
+								, TEMPFILENAME
+								, ORIGINFILENAME
+								, USERID
+								, IDATE
+							  ) 
+						VALUES (
+								 #{seq, jdbcType=VARCHAR}
+								,${fileTableName}_SEQ.NEXTVAL
+							    ,#{tempFileName, jdbcType=VARCHAR}
+							    ,#{originFileName, jdbcType=VARCHAR}
+							    ,#{userid, jdbcType=VARCHAR}
+							    ,#{idate, jdbcType=VARCHAR}
+							)	
+							
+	</insert>
+	
+<!-- 	<select id="userChattableSel" parameterType="HashMap" resultType="HashMap">
+		
+		SELECT 	  SEQ
+				, USERID
+				, DELETEYN
+				, CUTOFF 
+		FROM 	NEXI_USER_CHATTABLE 
+		WHERE 	DELETEYN = 'N'
+		AND 	USERID = #{userid, jdbcType=VARCHAR}
+		<if test= "seq != null and seq != '' ">
+			AND SEQ = #{seq, jdbcType=VARCHAR}			
+		</if>		
+	</select> -->
+	
+	
+	<select id="userChattableSel" parameterType="HashMap" resultType="HashMap">
+		
+		SELECT  
+				NC.SEQ
+			  , NC.SUBJECT
+			  , NC.USERID
+			  , NC.IDATE
+		FROM NEXI_CHAT NC, NEXI_CHAT_USER NCU
+		WHERE NCU.GUESTID = #{userid, jdbcType=VARCHAR}
+		AND NC.SEQ = NCU.SEQ
+		ORDER BY TO_NUMBER(NC.SEQ) DESC
+	
+	</select>
+	
+	
+	<select id="userChattableChk" parameterType="HashMap" resultType="HashMap">
+	
+		SELECT
+				 SEQ
+				,CHATSEQ
+				,GUESTID
+				,DELYN
+				,CUTOFF
+		FROM NEXI_CHAT_USER
+		WHERE CHATSEQ = #{chatSeq, jdbcType=VARCHAR}
+		AND DELYN = 'N'
+		<if test ="guestid != null and guestid != '' ">
+		AND GUESTID = #{userid, jdbcType=VARCHAR}
+		<!-- 	AND SEQ = #{seq, jdbcType=VARCHAR}  -->
+		</if>
+	
+	
+	</select>
+		
+	
+	<insert id="userChattableIn" parameterType="HashMap">
+		INSERT INTO NEXI_CHAT_USER (
+								  	SEQ
+								  ,	CHATSEQ
+								  , GUESTID
+								)
+		  select
+			 	USER_SEQ.NEXTVAL as SEQ
+			  ,	#{chatseq, jdbcType=VARCHAR} as CHATSEQ
+			  , USER_T.GUESTID 
+		  FROM (
+				<foreach item="item" index="index" 
+					collection="guestid" separator="UNION ALL">
+					 SELECT 
+					 		#{item, jdbcType=VARCHAR} as GUESTID
+			     	 from dual	
+			    </foreach>
+	     	   ) USER_T
+	</insert>
+	
+	<update id="userChattalbeDel" parameterType="HashMap">
+		UPDATE NEXI_CHAT_USER
+		SET DELYN = 'Y'
+		WHERE CHATSEQ = #{seq, jdbcType=VARCHAR} 
+		<if test="guestid !=null and guestid != '' ">
+			AND GUESTID = #{guestid, jdbcType=VARCHAR}
+		</if>
+	
+	</update>
+   
 </mapper>

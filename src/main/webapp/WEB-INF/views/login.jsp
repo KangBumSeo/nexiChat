@@ -367,8 +367,8 @@ function signUpHtml(){
 		<input type="password" id="loginPw" onKeypress="if(event.keyCode==13){$('#loginSubmit').click()}"/>
 	</div>
 	<div class="buttonDiv">
-		<input type="button" id="loginSubmit" value="submit"/>
-		<input type="button" id="signUp" value="signUp"/>
+		<input type="button" id="loginSubmit" value="로그인"/>
+		<input type="button" id="signUp" value="회원가입"/>
 	</div>
 <div class="signUpDiv" id="signUpDiv"></div>
 </div>

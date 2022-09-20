@@ -3,8 +3,10 @@
  * 20220811 
 */
 
+
 function chatAjax(aUrl, aParam, aType) {
 	var successResult;
+	console.log("------------------------------------------------------------");
 	console.log(aParam);
 	$.ajax({
 		url: aUrl,

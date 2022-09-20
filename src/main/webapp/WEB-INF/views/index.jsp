@@ -6,8 +6,37 @@
 <script src="http://code.highcharts.com/highcharts.js"></script>
 <script type="text/javascript" src="/resources/contents/js/jqgrid/jquery.jqGrid.js"></script>
 <script type="text/javascript">
-	function pageTest(){
-		$('#test').click(function(e){
+
+	function pageLoad(fnButton, fnUrl){
+		$(fnButton).click(function(e){
+			$.ajax({
+				url:fnUrl,
+				type:"get",
+				data: {  '':'' },
+				contentType: "application/json",
+				success: function(result){
+					
+					$('#container > #contents').remove();
+					console.log($('#container > #contents'))
+					var returnHtml = '<div id="contents" style="height: 440px;">';
+						returnHtml += result;
+						returnHtml += '</div>';
+						
+					//$('#container').html(returnHtml);
+					$('#container').append(returnHtml);
+					return;
+				},
+				error: function(){
+					alert("에러");
+				}
+			});//2
+	
+			///1
+		});
+	}
+
+/* 	function pageTest(){
+		$('#chat_select').click(function(e){
 			$.ajax({
 				url:"/chatmain",
 				type:"get",
@@ -114,16 +143,23 @@
 				}
 			});
 		});
-	}
+	} */
 	
 </script>
 <script>
 $(document).ready(function() {
+	pageLoad('#chat_select', '/chatmain'); //main
+	pageLoad('#chat_insert', '/chatinsert'); //insert
+	pageLoad('#chat_update', '/chatupdate'); //update
+	pageLoad('#chatlogin', '/login'); //login
+	pageLoad('#chat_in', '/chatting'); //chatin
+
+/* 
 	pageTest();
 	chatInsert();
 	chatUpdate();
 	chatLogin();
-
+ */
 	/*
    var chart = {
       type: 'column',
