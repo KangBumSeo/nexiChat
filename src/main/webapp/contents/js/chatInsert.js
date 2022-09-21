@@ -132,7 +132,7 @@ function  chatTypeHtml ( sessionId, targetId, type_yn  , userReturn , chatType){
 	});
 		buttonSel(chatType);
 
-
+ 
 	}
 
 

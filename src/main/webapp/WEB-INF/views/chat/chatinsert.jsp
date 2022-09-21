@@ -260,7 +260,7 @@ table.type08 td {
 				if(sel.length != 0) {
 					$("#pvHtml").remove();
 					chatTypeHtml(sessionId, 'chat', 'N', sel, 'O');
-				}
+				} 
 	 		 }else if(selOption === 'private'){
 	 			chatTypeHtml(sessionId, 'chat', 'N', userReturn, 'C');
 

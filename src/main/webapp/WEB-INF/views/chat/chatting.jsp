@@ -19,7 +19,7 @@
 	$(document).ready(function(){
 		var sessionId = '<%= sessionId %>';
 		console.log(sessionId);
-
+ 
 		var param = {'userid' : sessionId}
 
 		var returnVal = chatAjax("/userChattableSel", param, 'post');

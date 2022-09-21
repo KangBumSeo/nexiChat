@@ -201,7 +201,7 @@ table.type77 td {
   vertical-align: top;
   border-right: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
-}
+} 
 </style>
 <body>
 <div class="section" style="width:50%, float:left;">
