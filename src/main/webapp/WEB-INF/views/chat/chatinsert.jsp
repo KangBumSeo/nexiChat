@@ -177,6 +177,8 @@ table.type08 td {
 
 		chatType(sessionId);
 
+		
+
 		//$("#submit_btn").prop('disabled', true);
 		
 
@@ -250,9 +252,28 @@ table.type08 td {
 
 
 	 		if(selOption === 'public') {	 	 		
+		 		
 				chatTypeHtml(sessionId, 'chat', 'Y', userReturn, 'O');
+				
+				var sel = enterSel('userSearch', 'U', 'userSelect', sessionId);
+				console.log("sel >>>>>>>>: " + sel);
+				if(sel.length != 0) {
+					$("#pvHtml").remove();
+					chatTypeHtml(sessionId, 'chat', 'N', sel, 'O');
+				}
 	 		 }else if(selOption === 'private'){
 	 			chatTypeHtml(sessionId, 'chat', 'N', userReturn, 'C');
+
+	 			
+	 			var sel = enterSel('userSearch', 'U', 'chat');
+	 			enterSel.setAjaxUrl('userSelect');
+	 			enterSel.setChatHtml('chatY');
+	 			enterSel.setSession(sessionId);
+	 			enterSel.setChatType('C');
+				/* if(sel != null) {
+					$("#pvHtml").remove();
+					chatTypeHtml(sessionId, 'chat', 'N', sel, 'C');
+				} */
 		 	}else{
 		 		chatTypeHtml(sessionId, chat, "", userReturn);
 			}		

@@ -6,8 +6,6 @@
 
 function chatAjax(aUrl, aParam, aType) {
 	var successResult;
-	console.log("------------------------------------------------------------");
-	console.log(aParam);
 	$.ajax({
 		url: aUrl,
 		type: aType,
@@ -16,8 +14,6 @@ function chatAjax(aUrl, aParam, aType) {
 		async : false , // 동기 비동기 설정 안하면 왜 순서가 바뀌지....?
 		contentType: 'application/json; charset=UTF-8',
 		success: function(result,textStatus){
-			console.log("success");
-			console.log(result);
 			successResult = result;
 		},
 		error: function(request, status, error){

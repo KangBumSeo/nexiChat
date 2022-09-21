@@ -308,7 +308,7 @@
 			, DELYN
 	FROM NEXI_SIGNUP
 	WHERE USERID NOT IN #{id, jdbcType=VARCHAR}
-		<if test= "key !=null and key == 'U' and value !=null and value != '' ">
+		<if test= 'key !=null and key == "U" and value !=null and value != "" '>
 			AND USERID LIKE '%' || #{value, jdbcType=VARCHAR} || '%'
 		</if>
 	</select>
