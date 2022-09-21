@@ -584,6 +584,7 @@ layerOpen.sel = function(id,chatSeq){
                 <input type="hidden" value="N" id="memYN">     
              </div>   
           </div>
+          
           <div style=" width: 100%; height: 24.6px;">
              <input type="button" value="끄기" id="memSelClose" style="margin:10px;">
           </div>
