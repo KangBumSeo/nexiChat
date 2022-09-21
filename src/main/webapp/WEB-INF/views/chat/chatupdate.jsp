@@ -14,7 +14,7 @@
 		$(document).off("click");
 		var param = {'':''};
 		var test0 = chatAjax("/chatselectAll", param, 'post');
-		// 기본 화면 로딩
+		// 기본 화면 로딩 
 		//whenSuccess(test0);
 		
 		//var ynMap = {"update":"Y", "delete":"Y"};
