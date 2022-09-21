@@ -466,7 +466,7 @@
 	function layerOpen(id, chatSeq , click_yn ) {
 	      console.log("hi");
 	      //$("#"+id).on("click", function(){
-	      var clickYn = 'Y';
+	      //var clickYn = 'Y';
 	      /*
 	      layerOpen.setClickYn = function() { clickYn = 'N'; }
 	      layerOpen.clickReset = function() { clickYn = 'Y'; }
@@ -492,17 +492,19 @@ layerOpen.in = function( id , chatSeq ){
 	var param = {'id' : sessionId}
 	var userData = chatAjax('/userSelect', param, 'post');
 	$("#SelPop").show();
+	$('#SelPop').css('width','750px');
 	$("#pvHtml").remove();
-	chatTypeHtml( sessionId , 'memberchat' , 'N' , userData , 'Y' );
+	chatTypeHtml( sessionId , 'memberchat' , 'N' , userData , 'U' );
 	});
 } 	
 	
 layerOpen.sel = function(id,chatSeq){
     $("#"+id).on("mouseover", function(){
-         $("#userList").remove();
-         $("#pvHtml").remove();
+        $("#userList").remove();
+        $("#pvHtml").remove();
          
-         $("#SelPop").show();
+        $("#SelPop").show();
+		$('#SelPop').css('width','800px');
         param = {"chatSeq":chatSeq}
          
          var userResult = chatAjax("/userChattable", param, 'post');

@@ -42,7 +42,12 @@ function  chatTypeHtml ( sessionId, targetId, type_yn  , userReturn , chatType){
 				pvHtml += '			<input type="text" id="userSearch" style="margin-left: 50px;">';		
 				pvHtml += '		</div>';
 				pvHtml += '		<div class="pvButton" style="float: right;">';
-				pvHtml += '			<input type="button" id="userSubmit" value="만들기" style="height: 25px; margin: 5px 0px;">';
+				if(chatType === 'C' || chatType === 'O' ){
+					pvHtml += '			<input type="button" id="userSubmit" value="만들기" style="height: 25px; margin: 5px 0px;">';
+				}
+				else if ( chatType === 'U'){
+					pvHtml += '			<input type="button" id="userAddSubmit" value="userAdd" style="height: 25px; margin: 5px 0px;">';
+				}
 				pvHtml += '		</div>';				
 				pvHtml += '</div>';
 				
@@ -127,45 +132,6 @@ function  chatTypeHtml ( sessionId, targetId, type_yn  , userReturn , chatType){
 	});
 		buttonSel(chatType);
 
-/* 	$("#userSubmit").off().click(function(e){
-		console.log("userSubmit 클릭 ==================");
-
- 		var subject = $.trim($("#subject").val());
-		var userid = sessionId;
-		var tableName = subject + userid	
-		var status = 'O';
-		
-		console.log(subject);
-		var chkUser = $(':checkbox:checked');
-		if(chkUser.length === 0) {
-			alert("추가할 사용자를 선택하세요");
-			return;
-		}
-		
-		$.each(chkUser, function(i,v){
-			var chkNum = v.id.split('_')[1];
-			var chkUser = $("#userId_"+chkNum)[0].innerText;
-			guestid.push(chkUser);
-		});
-		guestid.push(sessionId);
-		console.log(guestid);
-
-		var iParam = {
-				'subject':subject,
-				'userid':userid,
-				'tableName':tableName,
-				'fileTableName':tableName+'_file',
-				'guestid':guestid,
-				'status': status
-		}
-
-		var insertResult = chatAjax('/chatinsertdata', iParam, 'post');
-
-		
-		//alert("채팅방이 생성되었습니다.");
-		console.log(insertResult);
-		
-	}); */
 
 	}
 
@@ -203,6 +169,9 @@ function buttonSel(chatType) {
 
 	});
 	
+	
+	$("#userAddSubmit").off().click(function(e){
+	});
 	
 	$("#userSubmit").off().click(function(e){
 		console.log("userSubmit 클릭 ==================");
