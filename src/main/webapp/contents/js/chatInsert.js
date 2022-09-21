@@ -2,8 +2,10 @@
 
 function  chatTypeHtml ( sessionId, targetId, type_yn  , userReturn , chatType){
 // Y 공개 , N 비공개 , "" : 선택 
+// chatType : O :: public (공개 채팅방) / C :: private (비공개 채팅방) / U :: userAdd (유저 추가 버튼 변경)
 /*	$("#pbHtml").remove();
 	$("#pvHtml").remove();*/
+	console.log("chatTypeHtml 시작");
 	if ( type_yn != ""){	
 		 
 		if( type_yn === 'Y' ){
@@ -30,12 +32,14 @@ function  chatTypeHtml ( sessionId, targetId, type_yn  , userReturn , chatType){
 				pbHtml +='</div>'
 				$("#"+targetId).append(pbHtml);
 		}
+		
+		
 			var pvHtml = "";
 				pvHtml += '<div class="chat content_body" id="pvHtml">';
 				pvHtml += '<div class="pvSubmit" style="width: 100%; height: 7%;">';
 				pvHtml += '		<div class="pvButton" style="float: left;">';
 				pvHtml += '			<input type="button" id="userReset" value="초기화" style="height: 25px; margin: 5px 0px;">';
-				pvHtml += '			<input type="text" style="margin-left: 50px;">';		
+				pvHtml += '			<input type="text" id="userSearch" style="margin-left: 50px;">';		
 				pvHtml += '		</div>';
 				pvHtml += '		<div class="pvButton" style="float: right;">';
 				pvHtml += '			<input type="button" id="userSubmit" value="만들기" style="height: 25px; margin: 5px 0px;">';
@@ -84,7 +88,9 @@ function  chatTypeHtml ( sessionId, targetId, type_yn  , userReturn , chatType){
 					userChoose(i, 'pvbodyChk', chatType)
 		
 				});
-			
+				
+				
+
 		
 	}
 	
@@ -251,12 +257,33 @@ function buttonSel(chatType) {
 }
 
 
-function enterSel (searchText) {
+function enterSel (searchText, key ,targetId  ) {
+	var sessionId,ajaxUrl,chatType,typeHtmlYn;
+	enterSel.setSession = function(fnSessionId){
+		sessionId = fnSessionId;
+	}
+	enterSel.setAjaxUrl = function(fnAjaxUrl){
+		ajaxUrl = fnAjaxUrl;
+	}
+	enterSel.setChatType = function(fnchatType){
+		//return chatType;
+		chatType = fnchatType;
+	}
+	enterSel.setChatHtml = function(fnStr){
+		//return fnStr;
+		typeHtmlYn = fnStr;
+	}
+	
+	/*$("#"+searchText).on("keypress", function(e) {*/
 	$(document).on("keypress", "#"+searchText, function(e) {
+	
 		
-		var value = $.trim($("#"+searchText).val());
+		console.log("key >>>> : " + key);
 		
-		if(e.keycode == 13){
+		//var value = $.trim($("#"+searchText).val());
+		var value = e.target.value.trim();
+		
+		if(e.keyCode == 13){
 			console.log("enter");
 			console.log("value >>>> : " + value);
 			
@@ -267,10 +294,20 @@ function enterSel (searchText) {
 			}
 
 		//	$('#chat_data').empty();
-			var cParam = { "key" : key, "value" : value};
-			var test = chatAjax('/chatselect', cParam ,'post');
-			var test = chatAjax('/'+fnParam, cParam ,'post');
-			console.log(test);
+			var cParam = { "key" : key, "value" : value, "id" : sessionId};
+			test = chatAjax('/'+ajaxUrl, cParam ,'post');
+
+			if(cParam.length == 0){
+				var returnHtml = "";
+			}
+			
+			if(typeHtmlYn === 'chatY'){
+
+				$("#pvHtml").remove();
+				chatTypeHtml(sessionId, targetId , 'N', test, chatType);
+			}
 		}
 	});
+	
+	
 }

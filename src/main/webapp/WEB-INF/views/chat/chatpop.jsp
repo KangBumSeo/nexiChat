@@ -1,16 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <spring:url value="/resources/contents/images/" var="img_url" />
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-latest.js"></script> 
 <script type="text/javascript" src="/contents/js/nCommon.js"></script>
 <script type="text/javascript" src="/contents/js/chatInsert.js"></script>
+<link rel="stylesheet" type="text/css" href="/resources/contents/css/chatpop.css" />
 <%
 	String sessionName = (String)session.getAttribute("username");
 	String sessionId = (String)session.getAttribute("userid");
@@ -63,7 +64,7 @@
 			var fileparam = {}
 
 			
-			if( $("#fileUpload")[0].files.length != 0 ) {  //√∑∫Œ ∆ƒ¿œ¿Ã ¿÷¿ª ∂ß
+			if( $("#fileUpload")[0].files.length != 0 ) {  //Ï≤®Î∂Ä ÌååÏùºÏù¥ ÏûàÏùÑ Îïå
 
 				//	param[chat_conv] = "1";
 					param["fileStatus"] = "Y";
@@ -148,7 +149,7 @@
 			var convClass_name = "";
 			var imgClass_name = "";
 
-			// sessionId ∫Ò±≥«œø© ≈¨∑°Ω∫ ¥Ÿ∏£∞‘ ¡÷±‚
+			// sessionId ÎπÑÍµêÌïòÏó¨ ÌÅ¥ÎûòÏä§ Îã§Î•¥Í≤å Ï£ºÍ∏∞
 			if (id == sessionId) {
 				class_name = "userdiv";
 				idClass_name = "userid";
@@ -169,9 +170,9 @@
 			}
  
 
-			// ¥Î»≠øÕ ªÁ¡¯ µ•¿Ã≈Õ ∫Ÿ¿Ã±‚
+			// ÎåÄÌôîÏôÄ ÏÇ¨ÏßÑ Îç∞Ïù¥ÌÑ∞ Î∂ôÏù¥Í∏∞
 			if ( seq+id === beforeDiv ){
-				// ∞∞æ“¿ª ∂ß ¡∂∞«
+				// Í∞ôÏïòÏùÑ Îïå Ï°∞Í±¥
 				html +=	'	<div class="'+ class_name+'">'; //cov&checkbox div
 				html += '		<input type="hidden" id="image_'+tableseq+'">'
 				html +=	'		<div class="chkSel" style="float: left; padding: 10px 0px;"></div>';
@@ -189,7 +190,7 @@
 
 			}
 			else if ( seq+id != beforeDiv ){
-				// ¿Ã¿¸ √§∆√ ≥ªøÎ π◊ seq∞° ¥Ÿ∏¶ ∞ÊøÏ ¡∂∞« 
+				// Ïù¥Ï†Ñ Ï±ÑÌåÖ ÎÇ¥Ïö© Î∞è seqÍ∞Ä Îã§Î•º Í≤ΩÏö∞ Ï°∞Í±¥ 
 				
 				beforeDiv = seq+id;
 
@@ -242,7 +243,7 @@
 		$('#delOk').remove();
 
 		if ($('#delBtn').length == 0) {
-			var delHtml = '<input type="button" value="∆Ì¡˝"  id="delBtn" >';
+			var delHtml = '<input type="button" value="Ìé∏Ïßë"  id="delBtn" >';
 			$("#delOption").append(delHtml);
 		}
 
@@ -254,8 +255,8 @@
 			
 			$('#delBtn').remove();
 			
-			var delHtml = '<input type="button" value="√Îº“"  id="cancleBtn" >';
-				delHtml += '<input type="button" value="ªË¡¶" id="delOk" style="float: right;">';
+			var delHtml = '<input type="button" value="Ï∑®ÏÜå"  id="cancleBtn" >';
+				delHtml += '<input type="button" value="ÏÇ≠Ï†ú" id="delOk" style="float: right;">';
 			$("#delOption").append(delHtml);
 			
 
@@ -317,11 +318,11 @@
 		$("#delOk").off().click(function(){
 
 			if ($('input:checkbox[id=chkbox]:checked').length == 0 ) {
-				alert("ªË¡¶«“  √§∆√¿ª º±≈√«ÿ¡÷ººø‰.");
+				alert("ÏÇ≠Ï†úÌï†  Ï±ÑÌåÖÏùÑ ÏÑ†ÌÉùÌï¥Ï£ºÏÑ∏Ïöî.");
 				return false;
 			}
 
-			var con = confirm("ªË¡¶«œΩ√∞⁄Ω¿¥œ±Ó?");
+			var con = confirm("ÏÇ≠Ï†úÌïòÏãúÍ≤†ÏäµÎãàÍπå?");
 			if( !con ) {
 				return false;
 			}			
@@ -393,7 +394,7 @@
 
 	
 	function fileUpload(){
-		// ∆ƒ¿œ æ˜∑ŒµÂ
+		// ÌååÏùº ÏóÖÎ°úÎìú
 		var fileUrl = "/nexiFileUpload";
 		var formData = new FormData();
 		var files = $("#fileUpload")[0].files;
@@ -406,7 +407,7 @@
 			formData.append("file", v)
 			var fileSize = v.size;
 			if(fileSize > 5242880) {
-				alert("5MB ¿Ã«œ¿« ∆ƒ¿œ∏∏ √∑∫Œ ∞°¥…«’¥œ¥Ÿ.");
+				alert("5MB Ïù¥ÌïòÏùò ÌååÏùºÎßå Ï≤®Î∂Ä Í∞ÄÎä•Ìï©ÎãàÎã§.");
 				return false;
 			};
 		});
@@ -428,7 +429,7 @@
 	function fileCheck(){
 		
 		if ($("#fileUpload")[0].files.length > 5) {
-			alert("∆ƒ¿œ¿∫ √÷¥Î 5∞≥±Ó¡ˆ∏∏ √∑∫Œ ∞°¥…«’¥œ¥Ÿ.");
+			alert("ÌååÏùºÏùÄ ÏµúÎåÄ 5Í∞úÍπåÏßÄÎßå Ï≤®Î∂Ä Í∞ÄÎä•Ìï©ÎãàÎã§.");
 
 			$("#userconv").val("");
 			$("#fileUpload").val("");
@@ -537,10 +538,10 @@ layerOpen.sel = function(id,chatSeq){
       
       $("#chatExit").on("click", function(e){
          
-         var exitConfirm = confirm("√§∆√πÊ¿ª ≥™∞°Ω√∞⁄Ω¿¥œ±Ó?");
+         var exitConfirm = confirm("Ï±ÑÌåÖÎ∞©ÏùÑ ÎÇòÍ∞ÄÏãúÍ≤†ÏäµÎãàÍπå?");
          
          if(exitConfirm) {
-            // ººº«æ∆¿Ãµ √£æ∆º≠ ∞…æÓæﬂ«‘
+            // ÏÑ∏ÏÖòÏïÑÏù¥Îîî Ï∞æÏïÑÏÑú Í±∏Ïñ¥ÏïºÌï®
             console.log("chatExit");
             param = {"guestid":sessionId, "seq":chatSeq}
             console.log(param);
@@ -558,352 +559,45 @@ layerOpen.sel = function(id,chatSeq){
 </script>
 </head>
 
-<style>
-
-.container{
-	margin : auto;
-	border: 1px solid;
-}
-
-
-.chat_header {
-	padding: 10px;
-	margin: 0px;
-	height: 50px;
-	border-bottom: 1px solid;
-	text-align:center;
-	background: #eee;
-}
-
-.chat_main {
-	width:100%;
-	height: 440px;
-	overflow-y: scroll
-}
-
-.main_text{
-    width: auto;
-    min-height: 380px;
-	margin: 10px 20px ;
-	color: #323232;
-}
-
-.userdiv{
-	float:right;  
-	display:block; 
-	margin: 5px 0px 15px 0px;
-	width: 520px;
-}
-
-.userid{
-	float:right;
-	width: 250px;
-	min-height: 20px;
-	text-align: left;
-	padding: 0px 10px 0px 30px;
-	word-break: break-all;
-
-}
-
-.usercon{
-	float:right;
-	width:250px; /*265px*/
-	min-height: 10px;
-	background-color: #fac66e;
-	text-align: left;
-	color: white;
-	padding: 10px;
-	border-radius: 5px;
-	margin-bottom: 8px;
-    height: 100%;
-    display: block;
-    word-break: break-all;
-	
-}
-
-.userimg{
-	float:right;
-	width:250px;
-	min-height: 10px;
-	background-color: #fac66e;
-	text-align: left;
-	color: white;
-	padding: 10px;
-	border-radius: 5px;
-	margin-bottom: 8px;
-    height: 100%;
-    display: block;
-    word-break: break-all;
-    float: right;
-
-}
-
-/* .uploadImage{
-	width:250px;
-	min-height: 10px;
-	background-color: #fac66e;
-	text-align: left;
-	color: white;
-	padding: 10px;
-	border-radius: 5px;
-	margin-bottom: 8px;
-    height: 100%;
-    display: block;
-    word-break: break-all;
-    float: right;
-
-} */
-
-.otherdiv{
-	float:right;  
-	display:block; 
-	margin: 5px 0px 15px 0px;
-	width: 520px;
-}
-
-.otherid{
-	float:left;
-	width:93%;
-	min-height: 20px;
-	text-align: left;
-	padding: 0px 10px 0px 30px;
-	word-break: break-all;
-}
-
-.othercon{
-	float:left;
-	width:250px; /*265px*/
-	min-height: 10px;
-	background-color: #4479e7;
-	text-align: left;
-	color: white;
-	padding: 10px;
-	border-radius: 5px;
-	margin-bottom: 8px;
-    height: 100%;
-    display: block;
-    word-break: break-all;
-}
-
-.otherimg{
-	float:left;
-	width:250px;
-	min-height: 10px;
-	background-color: #4479e7;
-	text-align: left;
-	color: white;
-	padding: 10px;
-	border-radius: 5px;
-	margin-bottom: 8px;
-    height: 100%;
-    display: block;
-    word-break: break-all;
-}
-
-
-.chat_input {
-	width:100%;
-	height: 100px;
-	border-top: 1px solid;
-	background: #eeeeee;
-}
-
-.input_name {
-	margin: 10px 20px ;
-
-}
-
-.input_conv{
-	margin: 10px 20px;
-}
-
-
-
-.del_userconv{
-	margin: 20px 10px 0px 10px;
-    width: 20px;
-    height: 20px;
-    float: right;
-
-}
-
-.del_userimg{
-	margin: 74px 10px 0px 10px;
-    width: 20px;
-    height: 20px;
-    float: right;
-}
-
-
-.del_otherconv{
-	margin: 20px 10px 0px 10px;
-    width: 20px;
-    height: 20px;
-    float: left;
-
-}
-
-.del_otherimg{
-	margin: 74px 0px 0px 10px;
-    width: 20px;
-    height: 20px;
-    float: left;
-}
-
-.convDom{
-	width: 100%;
-    height: 100%;
-    float: right;
-}
-
-.chkSel{
-	float: left;
-    padding: 10px 0px;
-    width: 20px;
-    height: 22.9px;
-
-}
-
-
-/* -----------------------------√ﬂ∞°-----------------------------------~*/
-.chat{
-	width: 500px;
-	height: 43.5px;
-	background: #bccae7;
-	font-weight: bold;
-	
-}
-
-
-.content_sub_header{
-    background:#eee;
- 
-}
-
-.select{
-	height: 100%;
-	float: left;
-	margin-left: 50px;
-}
-
-
-.content_title{
-    float: left;
-    width: 25%;
-    font-size: larger;
-    padding: 10px;
-	border: 1px solid #ccc;
-    height: 100%;
-
-}
-
-.content_in{
-	float: left;
-    width: 25%;
-    font-size: larger;
-    font-weight: 500;
-    padding: 10px;
-	border: 1px solid #ccc;
-    height: 100%;
-
-}
-
-.no_top {
-	border-top : 0px;
-
-}
-
-.no_left{
-	border-left : 0px;
-}
-
-
-
-.content_body{
-    background: #f7f7f7;
-    padding: 0px 20px;
-    height: 500px;
-}
-
-.content_body_main{
-    height: auto;
-    text-align: center;
-    width: 45%;
-    float: left;
-
-}
-
-.content_body_line{
-	height: 35.5px;
-	width: 100%;
-}
-
-.content_body_detail{
-    float: left;
-    width: 41%;
-	/* height: 100%; */
-    padding: 10px;
-
-}
-
-.chk{
-	width: 39%;
-    height: 100%;
-    padding: 4px;
-}
-
-
-.chat_info{
-    height: 100%;
-    float: left;
-    width: 40%;
-    padding: 10px;
-    /* border: 1px solid; */
-}
-
-
-</style>
-
-
 <body>
 <div class="container" id="container">
 	<div class="chat_header" style="background: #eeeeee;">
 		<div style="margin-bottom:5px;width: 35%;height: 21px;float: left;">
-			 <input type="button" value="¿Œø¯ »Æ¿Œ" id="memSelPop" style="float: left;">
-           <input type="button" value="¿Œø¯ √ﬂ∞°" id="memInPop" style="float: left;">
+			 <input type="button" value="Ïù∏Ïõê ÌôïÏù∏" id="memSelPop" style="float: left;">
+           <input type="button" value="Ïù∏Ïõê Ï∂îÍ∞Ä" id="memInPop" style="float: left;">
 		</div>
 		<div style="margin-bottom:5px;width: 40%;height: 21px; float: left;">${chatTname}</div>
 		<div style="margin-bottom:5px;width: 25%;height: 21px;float: left;">
-            <input type="button" value="≥™∞°±‚" id="chatExit" style="float: right;">  
+            <input type="button" value="ÎÇòÍ∞ÄÍ∏∞" id="chatExit" style="float: right;">  
         </div>
 		<div style="text-align: left; height: 25px;" id="delOption">
 		</div>
 	</div>
 	
 	<div>
-		  <div id="SelPop" style="background:white; border: 1px solid; position:absolute; left:20px; top:42px; width:200px; height:300px; z-index:1;display:none; text-align: center;">
-          <div style="margin: 10px;">√§∆√ ∏‚πˆ</div>
-          <div style="margin: 10px;">
-             <div id="memberchat" style="width: 100%;height: 24.6px;">      
+		  <div id="SelPop" class="selPopDiv" >
+          <div style="margin: 10px;">Ï±ÑÌåÖ Î©§Î≤Ñ</div>
+          <div style="margin: 10px; height: 83%;">
+             <div id="memberchat" class="mamberchatDiv">      
                 <input type="hidden" value="N" id="memYN">     
              </div>   
           </div>
           <div style=" width: 100%; height: 24.6px;">
-             <input type="button" value="≤Ù±‚" id="memSelClose" style="margin:10px;">
+             <input type="button" value="ÎÅÑÍ∏∞" id="memSelClose" style="margin:10px;">
           </div>
         
 	</div>
 	
 	<div>
 		  <div id="InPop" style="background:white; border: 1px solid; position:absolute; left:20px; top:42px; width:200px; height:300px; z-index:1;display:none; text-align: center;">
-          <div style="margin: 10px;">∏‚πˆ √ﬂ∞°</div>
+          <div style="margin: 10px;">Î©§Î≤Ñ Ï∂îÍ∞Ä</div>
           <div style="margin: 10px;">
              <div id="memberInsert" style="width: 100%;height: 24.6px;">      
                 <!-- <input type="hidden" value="N" id="memYN">  -->    
              </div>   
           </div>
           <div style=" width: 100%; height: 24.6px;">
-             <input type="button" value="≤Ù±‚" id="memInClose" style="margin:10px;">
+             <input type="button" value="ÎÅÑÍ∏∞" id="memInClose" style="margin:10px;">
           </div>
         
 	</div>
@@ -915,7 +609,7 @@ layerOpen.sel = function(id,chatSeq){
 			<input type="text" id="userid" style="background: #f7f7f7; color: #515170;" value="<%=sessionId%>" disabled>
 			<input type="hidden" id="tableName" value="${chatTname}">
 			<input type="file" id="fileUpload" multiple>
-			<input type="button" id="chat_submit" value="¿‘∑¬" 
+			<input type="button" id="chat_submit" value="ÏûÖÎ†•" 
 					style="float:right; margin-right: 20px; background: #a1a5ab; color: #fff; border: 1px #939292 solid;">
 		</div>
 		<div class="input_conv">
