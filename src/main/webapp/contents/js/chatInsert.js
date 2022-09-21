@@ -149,7 +149,7 @@ function userSelHtml ( htmlId, userId, delYN, chkYN, i){
 	}else {
 		pvHtml += '		<div class="content_body_line userTarget" id="userSel_'+i+'">';
 	}
-		pvHtml += '			<div class="content_body_detail chk" id="userId_'+i+'">';
+		pvHtml += '			<div class="content_body_detail chk userClass" id="userId_'+i+'">';
 		pvHtml += 				userId;
 		pvHtml += '			</div>';
 		pvHtml += '			<div class="content_body_detail chk" id="delYN_'+i+'">';
@@ -171,6 +171,27 @@ function buttonSel(chatType) {
 	
 	
 	$("#userAddSubmit").off().click(function(e){
+		var iParam = [];
+
+		var chkTarget = $('#pvbodyChk').find('.userClass');
+	
+		$.each( chkTarget , function(i,v){
+			var userIdDiv = $('#'+v.id).text().trim();
+			console.log(	userIdDiv  );
+			iParam.push(userIdDiv);
+		});
+		console.log(iParam)
+		var insertResult = false;//chatAjax('/chatinsertdata', iParam, 'post');
+
+		if(insertResult) {
+			alert("채팅방이 생성되었습니다.");
+			console.log(insertResult);
+			location.href = "/";
+		}else{
+			alert("채팅방이 생성되지 않았습니다.");
+			return;
+		}
+		
 	});
 	
 	$("#userSubmit").off().click(function(e){

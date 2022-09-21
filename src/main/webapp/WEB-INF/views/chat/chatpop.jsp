@@ -41,7 +41,7 @@
 		layerOpen('memInPop', chatSeq , 'in');
 		$("#chat_main").scrollTop($("#chat_main")[0].scrollHeight);
 
-		$(document).on("keyup click", "#userconv", function(key){
+		$(document).on("keyup", "#userconv", function(key){
 			if(key.keyCode == 13) {
 				var chat_conv = $("#userconv").val();
 				var param = {"tableName":tableName, "userid":sessionId, "usercs":chat_conv};
@@ -489,12 +489,24 @@
 	   }
 layerOpen.in = function( id , chatSeq ){
 	$("#"+id).on("click", function(){
+		$('#chatPopTitle').text('Chat User Adder');
 	var param = {'id' : sessionId}
 	var userData = chatAjax('/userSelect', param, 'post');
 	$("#SelPop").show();
-	$('#SelPop').css('width','750px');
+	$('#memSelClose').show();
+	$('#SelPop').css('width','560px');
+	$('#SelPop').css('height','550px');
 	$("#pvHtml").remove();
 	chatTypeHtml( sessionId , 'memberchat' , 'N' , userData , 'U' );
+	});
+
+	$('#memSelClose').click(function(e){
+
+        $("#SelPop").hide();
+        $("#userList").remove();
+        $("#pvHtml").remove();
+
+		$('#memSelClose').hide();
 	});
 } 	
 	
@@ -502,11 +514,15 @@ layerOpen.sel = function(id,chatSeq){
     $("#"+id).on("mouseover", function(){
         $("#userList").remove();
         $("#pvHtml").remove();
+
+		$('#memSelClose').hide();
          
         $("#SelPop").show();
-		$('#SelPop').css('width','800px');
+		$('#SelPop').css('width','300px');
+		$('#SelPop').css('height','200px');
         param = {"chatSeq":chatSeq}
          
+		$('#chatPopTitle').text('Char Member');
          var userResult = chatAjax("/userChattable", param, 'post');
 	         
          if( userResult ) {
@@ -578,7 +594,7 @@ layerOpen.sel = function(id,chatSeq){
 	
 	<div>
 		  <div id="SelPop" class="selPopDiv" >
-          <div style="margin: 10px;">채팅 멤버</div>
+          <div style="margin: 10px;" id="chatPopTitle" >채팅 멤버</div>
           <div style="margin: 10px; height: 83%;">
              <div id="memberchat" class="mamberchatDiv">      
                 <input type="hidden" value="N" id="memYN">     
