@@ -14,7 +14,7 @@
 		$(document).off("click");
 		var param = {'':''};
 		var test0 = chatAjax("/chatselectAll", param, 'post');
-		// 기본 화면 로딩 
+		// 기본 화면 로딩
 		//whenSuccess(test0);
 		
 		//var ynMap = {"update":"Y", "delete":"Y"};
@@ -201,22 +201,21 @@ table.type77 td {
   vertical-align: top;
   border-right: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
-} 
+}
 </style>
 <body>
-<div class="section" style="width:50%, float:left;">
-	<table class="type77" width="1200" style="table-layout:fixed; text-align:center;" id="data_table">
+<div class="section" style="width:50%; padding:2% 10%; float:left;">
+	<table class="type77" width="1000" style="table-layout:fixed; text-align:center;" id="data_table">
 		<thead>
 			<tr>
-				<td colspan="7" style="background: #bccae7; border-top: 1px solid #ccc; font-weight: bold; border-bottom: 1px solid #999696;">채팅방 목록</td>
+				<td colspan="5" style="background: #bccae7; border-top: 1px solid #ccc; font-weight: bold; border-bottom: 1px solid #999696;">채팅방 목록</td>
 			</tr>
 			<tr>
 				<th id="seq">번호</th>
 				<th id="subject" style="border-bottom: 2px solid #c00; ">제목</th>
 				<th id="userid" style="border-bottom: 2px solid #c00; ">방장</th>
 				<th id="idate" >입력/수정 날짜</th>
-				<td colspan="2" style="background: #eee; font-weight: bold;">수정</td>
-				<td style="background: #eee; font-weight: bold;">삭제</td>
+				<td style="background: #eee; font-weight: bold;">수정 / 삭제</td>
 			</tr>
 		</thead>
 		<tbody id="chat_data">

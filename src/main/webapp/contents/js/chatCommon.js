@@ -18,21 +18,43 @@
 			updateYn = "1"
 				
 			$.each( fnTest, function(key, value) {
-			    html += "<tr>";			
-				html += "<td id='seq_"+value.SEQ+"'>"+value.SEQ+"</td>";
-				html += "<td id='subject_"+value.SEQ+"'>"+value.SUBJECT+"</td>";
-				html += "<td id='userid_"+value.SEQ+"'>"+value.USERID+"</td>";
-				html += "<td id='idate_"+value.SEQ+"'>"+value.IDATE+"</td>";
-			    if (ynMap.update && ynMap.delete) {
-				    if (ynMap.update ==='Y' && ynMap.delete ==='Y'){
-						html+='<td><input type="button" name="'+value.SEQ+'" id="upBtn" value="수정"></td>';
-						html+='<td><input type="button" id="comBtn" value="완료"></td>'
-						html+='<td><input type="button" id="delBtn" value="삭제"></td>';
-					}
-				}else{
-			   		alert("확인하세요");
+				
+				var chatType = value.STATUS
+				console.log(chatType);
+				var subject_htmlValStr = '';
+				var userid_htmlValStr = '';
+				var htmlSumVal = '';
+				
+				if(chatType === 'C') {
+					subject_htmlValStr = '비공개';
+					userid_htmlValStr = '비공개';
+				}else if (chatType === 'O') {
+					subject_htmlValStr = value.SUBJECT;
+					userid_htmlValStr = value.USERID;
+					htmlSumVal += '	<input type="button" style="margin: 0px 10px;" name="'+value.SEQ+'" id="upBtn" value="수정">';
+					htmlSumVal += '	<input type="button" style="margin: 0px 10px;" id="comBtn" value="완료">';
 				}
-				html += "</tr>";
+					htmlSumVal += '<input type="button" style="margin: 0px 10px;" id="delBtn" value="삭제">';
+										
+				html += "<tr>";	
+				html += "<td id='seq_"+value.SEQ+"'>"+value.SEQ+"</td>";
+				html += "<td id='subject_"+value.SEQ+"'>"+subject_htmlValStr+"</td>";
+				html += "<td id='userid_"+value.SEQ+"'>"+userid_htmlValStr+"</td>";
+				html += "<td id='idate_"+value.SEQ+"'>"+value.IDATE+"</td>";
+				
+			
+		   		
+		    if (ynMap.update && ynMap.delete) {
+			    if (ynMap.update ==='Y' && ynMap.delete ==='Y'){
+					html+='<td>';
+					html+=htmlSumVal;
+					html+='</td>';
+				}
+			}else{
+		   		alert("확인하세요");
+			}
+			html += "</tr>";
+			
 			});
 			$('#chat_data').append(html);
 
@@ -40,84 +62,49 @@
 		
 		
 		function input_change( fn_event ){
-			console.log("input_change");
-			console.log(fn_event);
 			
-			
-			var returnBool = false;
-			var inputChk = $("a[name=seq]");
-			//var inputChk = $('#chat_data').find('a');
-			//console.log(inputChk);
-			console.log();
-			if( inputChk.length > 0 ){
-				console.log(inputChk.length);
-				console.log("inputChk if 문 ");
-				
-				
-				// fn_event
-				// fn_event 을 이용하여 input을 <td></td> text 방식으로 변경 소스 작업
+			// fn_event
+			// fn_event 을 이용하여 input을 <td></td> text 방식으로 변경 소스 작업
+			if(fn_event.length != 0){
 				$.each(fn_event[0].childNodes, function(i, v){
 					var inputVal = v.innerHTML;
-					console.log(inputVal);
-					console.log(inputVal.value);
-						if(inputVal.split('button').length === 1) {							
-							if(inputVal.split('input').length === 1) {
-								this.innerHTML = "<td id='subject_'>"+document.getElementsByName('seq')[0].innerHTML+"</td>";	
-							}else{
-								this.innerHTML = "<td id='subject_'>"+document.getElementsByName('val')[0].value+"</td>";
+					if(inputVal.split('button').length === 1) {							
+						console.log(inputVal);
+							if(inputVal.split('input').length != 1) {
+								this.innerHTML = "<td id=''>"+document.getElementsByName("val")[0].value+"</td>";	
+							}
+							else if(inputVal.split('detailSeq').length != 1) {
+								this.innerHTML = "<td id=''>"+$("#detailSeq").text()+"</td>";
+							} 
+							else if(inputVal.split('detailDate').length != 1) {
+								this.innerHTML = "<td id=''>"+$("#detailDate").text()+"</td>";
 							}
 						} 
-						
-						/*
-						if (i != 0) {
-							this.innerHTML = "<td id='subject_"+value.SEQ+"'>"+value.SUBJECT+"</td>";
-						}else{
-							this.innerHTML = "<td id='seq_"+inputVal+"'>"+inputVal+"</td>";
-						}
-						*/	
-					
 				});
-				
-				return true;
 			}
-			else{
-				
-				return false;
-			}
-	
 		}
 		
 	
 		function updateChk() {
 			
 			$(document).on("click", "#upBtn", function(e){
-				
 				var arrTemp = [];
+				var inputVal;
 				var thVal = $('#data_table > thead > tr > th ');
 				var id = $(e.target.parentElement.parentElement);//tr
-				
 				//oldTableName
 				var tNameVal_1 = id[0].childNodes[1].innerHTML;
 				var tNameVal_2 = id[0].childNodes[2].innerHTML;
 				oldTableName = tNameVal_1+tNameVal_2
 				
-				console.log(oldTableName);
+			//기존에 input을 text로 변경 작업 
+				var findInput = $('#chat_data').find('input');
 				
-				//기존에 input을 text로 변경 작업 
-				var inputVal = $('#chat_data').find('a').parent().parent();
+				inputVal = $('#chat_data').find('a[id="detailSeq"]').parent().parent();
 			//	var inputVal = $("a[name=seq]");
-				console.log(inputVal);
 				var changeVal = $(e.target.parentElement.parentElement);
+				console.log(inputVal);
 				input_change(inputVal );			
-
-			
-	
-				//console.log(id[0].childNodes);//td
-				//console.log(id.parent());
-			//	console.log(thVal);
-			//	console.log(thVal[0].id);
-				//console.log($('#data_table > thead > tr > th ')[0].innerHTML);
-				
 				//4
 				$.each(thVal, function(i, v){
 					var thValue = v.id
@@ -125,25 +112,18 @@
 					arrTemp.push(thValue); 
 					
 				});
-				//console.log("arrTemp >>> : " + arrTemp);
 				//5
-				console.log(id[0].childNodes)
 				var uVal = [];
 					for (i=0; i<id[0].childNodes.length; i++) {
 						uVal.push(id[0].childNodes[i].id);
 					} 
-					console.log(uVal);
 	
 	
 				var chkButton = $(e.target)[0].name;
 				
-				console.log(chkButton);
-				console.log(id[0].childNodes)
-				
 	
 				$.each(id[0].childNodes ,function(i,v){
 					var tempValue = v.innerHTML;
-					console.log(tempValue);
 					/*
 					var test = ['1','2','3','99','33'];
 					console.log(test.indexOf('99'));
@@ -163,15 +143,14 @@
 						if (i != 0 && i != 3  ) {
 							this.innerHTML = '<input style="width:80%;" name="val" value="'+tempValue+'" />';
 						}else if(i == 3){
-							this.innerHTML = '<a style="width:80%;" name="val">'+tempValue+'</a>';
+							this.innerHTML = '<a style="width:80%;" id="detailDate">'+tempValue+'</a>';
 						}else{
-							this.innerHTML = '<a style="width:80%;" name="seq">'+tempValue+'</a>';
+							this.innerHTML = '<a style="width:80%;" id="detailSeq">'+tempValue+'</a>';
 						}
 					}
 						
-				}); //foreach 끝					
-			//	console.log($("a[name=seq]").length);
-			
+				}); //foreach 끝			
+					
 			updateOk(oldTableName);	
 				
 			});
