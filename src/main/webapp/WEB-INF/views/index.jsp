@@ -9,28 +9,31 @@
 
 	function pageLoad(fnButton, fnUrl){
 		$(fnButton).click(function(e){
-			$.ajax({
-				url:fnUrl,
-				type:"get",
-				data: {  '':'' },
-				contentType: "application/json",
-				success: function(result){
-					
-					$('#container > #contents').remove();
-					console.log($('#container > #contents'))
-					var returnHtml = '<div id="contents" style="height: 440px;">';
-						returnHtml += result;
-						returnHtml += '</div>';
-						
-					//$('#container').html(returnHtml);
-					$('#container').append(returnHtml);
-					return;
-				},
-				error: function(){
-					alert("에러");
-				}
-			});//2
-	
+
+			var userid = '<%= (String)session.getAttribute("userid") %>';
+			if( (userid != '' && userid != 'null') || fnUrl === '/login' ){
+				$.ajax({
+					url:fnUrl,
+					type:"get",
+					data: {  '':'' },
+					contentType: "application/json",
+					success: function(result){			
+						$('#container > #contents').remove();
+						console.log($('#container > #contents'))
+						var returnHtml = '<div id="contents" style="height: 440px;">';
+							returnHtml += result;
+							returnHtml += '</div>';
+						$('#container').append(returnHtml);
+						return;
+					},
+					error: function(){
+						alert("에러");
+					}
+				});//2
+			} // end if session
+			else{
+				alert(" Login is Required");
+			}
 			///1
 		});
 	}
@@ -148,12 +151,11 @@
 </script>
 <script>
 $(document).ready(function() {
-	pageLoad('#chat_select', '/chatmain'); //main
-	pageLoad('#chat_insert', '/chatinsert'); //insert
-	pageLoad('#chat_update', '/chatupdate'); //update
-	pageLoad('#chatlogin', '/login'); //login
-	pageLoad('#chat_in', '/chatting'); //chatin
-
+		pageLoad('#chat_select', '/chatmain'); //main
+		pageLoad('#chat_insert', '/chatinsert'); //insert
+		pageLoad('#chat_update', '/chatupdate'); //update
+		pageLoad('#chatlogin', '/login'); //login
+		pageLoad('#chat_in', '/chatting'); //chatin
 /* 
 	pageTest();
 	chatInsert();
