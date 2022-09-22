@@ -33,6 +33,7 @@
 			} // end if session
 			else{
 				alert(" Login is Required");
+				$('#chatlogin').click();
 			}
 			///1
 		});
