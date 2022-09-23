@@ -1,8 +1,11 @@
 package com.nexicure.nim.controller;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.Console;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
@@ -14,6 +17,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -78,7 +82,8 @@ public class ChatController {
 		String fileStatus = null; 
 		
 		//파일 경로 
-		String filePath = "D:\\sts\\work\\workspace\\Nexicure Web Application\\src\\main\\webapp\\contents\\images\\newimage";
+		//String filePath = "D:\\sts\\work\\workspace\\Nexicure Web Application\\src\\main\\webapp\\contents\\images\\newimage";
+		String filePath = "D:\\sts\\work\\workspace\\Nexicure Web Application\\src\\main\\webapp\\contents\\images\\aa";
 		// 파일 이름		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 		
@@ -102,13 +107,36 @@ public class ChatController {
 				idate = dateFormat.format(new Date());
 				tempFileName = idate+"_"+i+"."+fileExtention[leng];	
 				
-			//	uploadFile = UploadFileUtils.fileUpload(tempFileName);
-				
 				File uploadFile = new File(filePath, tempFileName);
 				
 				file[i].transferTo(uploadFile);	
 				
-				String thumbImg = UploadFileUtils.makeThumbnail(filePath, tempFileName, uploadFile);
+				
+				
+				//========fileRead ========================
+				System.out.println( "========fileRead ========================");
+				BufferedImage thumbnail;
+				File readFile = new File(filePath, tempFileName);
+				System.out.println("readFile >>>>>: " + readFile);
+				
+				thumbnail = ImageIO.read(readFile);
+				BufferedImage newimg = new BufferedImage(100,100,BufferedImage.TYPE_3BYTE_BGR);
+				Graphics2D g = newimg.createGraphics();
+				g.drawImage(newimg, 0, 0, 100, 100, null);
+				
+				/*
+				 * File file = new File("new.jpg");      ImageIO.write(img, "JPEG",file);
+				 */
+				 
+				
+		//		ImageIO.write(newimg, "png", thumbnail);
+				
+				
+		//		FileReader fr = new FileReader(uploadFile);
+		//		System.out.println("fr >>>>>: " + fr);
+				
+				
+		//		String thumbImg = UploadFileUtils.makeThumbnail(filePath, tempFileName, uploadFile);
 				fileMap.put("tempFileName", tempFileName);
 				fileMap.put("originFileName", originFileName);
 				fileMap.put("idate", idate);

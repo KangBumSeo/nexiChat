@@ -204,8 +204,8 @@ table.type77 td {
 }
 </style>
 <body>
-<div class="section" style="width:50%; padding:2% 10%; float:left;">
-	<table class="type77" width="1000" style="table-layout:fixed; text-align:center;" id="data_table">
+<div class="section" style="width:100%; padding:2% 10%; float:left;">
+	<table class="type77" width="98%" style="table-layout:fixed; text-align:center;" id="data_table">
 		<thead>
 			<tr>
 				<td colspan="5" style="background: #bccae7; border-top: 1px solid #ccc; font-weight: bold; border-bottom: 1px solid #999696;">채팅방 목록</td>

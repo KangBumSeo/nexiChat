@@ -156,8 +156,8 @@
 	
 	<insert id="nexiFileTableInsert" parameterType="HashMap">
 		CREATE TABLE ${fileTableName}(
-				     SEQ 			VARCHAR2(1000) PRIMARY KEY
-				    ,TABLESEQ		VARCHAR2(1000)
+				     SEQ 			VARCHAR2(1000) 
+				    ,TABLESEQ		VARCHAR2(1000) PRIMARY KEY
 				    ,TEMPFILENAME   VARCHAR2(1000)
 				    ,ORIGINFILENAME VARCHAR2(1000)
 				    ,USERID			VARCHAR2(100)
@@ -388,14 +388,14 @@
 	
 	
 	<select id="userChattableChk" parameterType="HashMap" resultType="HashMap">
-	
+	 /* userChattableChk */ 
 		SELECT 
 				 NCU.SEQ
 				,NCU.CHATSEQ
 				,NCU.GUESTID
 				,NCU.DELYN
 				,NCU.CUTOFF
-				,DECODE(NVL(NC.USERID, 'N'), 'N', 'N', 'Y') SUPERUSER
+				,DECODE( NVL(NC.USERID, 'N') , 'N', 'N', 'Y') SUPERUSER
 		FROM 	NEXI_CHAT_USER NCU LEFT JOIN NEXI_CHAT NC
 		ON 		NCU.GUESTID = NC.USERID
 		AND 	NCU.CHATSEQ = NC.SEQ

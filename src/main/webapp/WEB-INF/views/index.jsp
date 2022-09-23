@@ -20,7 +20,7 @@
 					success: function(result){			
 						$('#container > #contents').remove();
 						console.log($('#container > #contents'))
-						var returnHtml = '<div id="contents" style="height: 440px;">';
+						var returnHtml = '<div id="contents" >';
 							returnHtml += result;
 							returnHtml += '</div>';
 						$('#container').append(returnHtml);
@@ -383,13 +383,15 @@ table.type08 td {
 				<spring:message code="MNU_4000"/> &gt; <strong><spring:message code="MNU_4100"/></strong-->
 			</div>
 		</div>
-		<div id="contents" style="height: 440px;">
+		<div id="contents" style="height: 100%; width:100%;">
+		
 			<div class="section" style="width:50%;float:left;">
 				<div id="nxc1" style="width: 750px; height: 550px; margin: 0 auto"></div>
 			</div>
 			<div class="section" style="width:50%;float:right;">
 				<div id="nxc2" style="width: 750px; height: 550px; margin: 0 auto"></div>
 			</div>
+			
 		</div>
 
 		<div id="contents">

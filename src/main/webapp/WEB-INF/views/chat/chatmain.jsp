@@ -251,9 +251,9 @@ table.type08 td {
 
 </style>
 <body>
-<div class="section" style="width:50%, float:left;">
+<div class="section" style="width:100%; height:100% float:left;">
 <!-- 	<form id="chat" name="chat" action="/chat" method="get"> -->
-	<table class="type08" width="700" style="table-layout:fixed; text-align:center;">
+	<table class="type08" style="width:50%; /*table-layout:fixed;*/ text-align:center;">
 		<thead>
 			<tr>
 				<th colspan="4">채팅방 검색</th>
