@@ -91,7 +91,7 @@
 
 			if (value === "") {
 				alert("검색할 내용을 입력하세요!");
-				$("#searchSel").focus();
+				//$("#searchSel").focus();
 				return;
 			}
 
@@ -109,7 +109,7 @@
 			
 			if (value === "") {
 				alert("검색할 내용을 입력하세요!");
-				$("#searchSel").focus();
+				//$("#searchSel").focus();
 				return;
 			}
 

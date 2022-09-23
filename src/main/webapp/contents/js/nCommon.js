@@ -31,13 +31,13 @@ function chatAjax(aUrl, aParam, aType) {
  */
 
 // runAjax 전역변수 
-let setAsync = false;
-let setDataType = 'json';
-let setClickTarget = '';
-let setHeader = '';
-let setToken = '';
-let setLoadingTarget = '';
-let setLoadingCss = '';
+var setAsync = false;
+var setDataType = 'json';
+var setClickTarget = '';
+var setHeader = '';
+var setToken = '';
+var setLoadingTarget = '';
+var setLoadingCss = '';
 
 /** ajax 커스텀마이징
  * @param fnUrl : 요청Url
@@ -75,7 +75,7 @@ function runAjax( fnUrl , fnParam , fnType ){
         	// 로딩 CSS 추가 가능
         	if( setLoadingTarget != '' && setLoadingTarget ){ $('#'+setLoadingTarget).addClass(setLoadingCss); }
         },
-        complete : ( result ) => {
+        compvare : ( result ) => {
         	// 로딩 CSS 추가 가능
         	console.log(result)
         	console.log(result.redirect)
@@ -317,12 +317,12 @@ function dateSet(){}
  *  @returns String
  */
 dateSet.getNowDate = ( fnDateFormet ) => {
-	let today = new Date();   
+	var today = new Date();   
 
-	let year = today.getFullYear(); // 년도
-	let month = today.getMonth() + 1;  // 월
-	let date = today.getDate();  // 날짜
-	let returnDate = '';
+	var year = today.getFullYear(); // 년도
+	var month = today.getMonth() + 1;  // 월
+	var date = today.getDate();  // 날짜
+	var returnDate = '';
 
 	if( fnDateFormet != '' && fnDateFormet ){
 		returnDate = year + fnDateFormet + month + fnDateFormet + date;
@@ -339,12 +339,12 @@ dateSet.getNowDate = ( fnDateFormet ) => {
  */
 dateSet.getBeforeDate = ( fnSettingDate , fnSettingDateNum , fnDateFormet ) => {
 	if( fnSettingDateNum === '' || !fnSettingDateNum ){ fnSettingDateNum = 1; }
-	let today = new Date();   
+	var today = new Date();   
 
-	let year =  fnSettingDate === 'y' ? today.getFullYear() - fnSettingDateNum : today.getFullYear() ; // 년도
-	let month = fnSettingDate === 'm' ? today.getMonth() + 1 - fnSettingDateNum : today.getMonth() + 1 ;  // 월
-	let date =  fnSettingDate === 'd' ? today.getDate() - fnSettingDateNum : today.getDate() ;  // 날짜
-	let returnDate = '';
+	var year =  fnSettingDate === 'y' ? today.getFullYear() - fnSettingDateNum : today.getFullYear() ; // 년도
+	var month = fnSettingDate === 'm' ? today.getMonth() + 1 - fnSettingDateNum : today.getMonth() + 1 ;  // 월
+	var date =  fnSettingDate === 'd' ? today.getDate() - fnSettingDateNum : today.getDate() ;  // 날짜
+	var returnDate = '';
 
 	if( fnDateFormet != '' && fnDateFormet ){
 		returnDate = year + fnDateFormet + month + fnDateFormet + date;
@@ -361,12 +361,12 @@ dateSet.getBeforeDate = ( fnSettingDate , fnSettingDateNum , fnDateFormet ) => {
  */
 dateSet.getNextDate = ( fnSettingDate , fnSettingDateNum , fnDateFormet ) => {
 	if( fnSettingDateNum === '' || !fnSettingDateNum ){ fnSettingDateNum = 1; }
-	let today = new Date();   
+	var today = new Date();   
 
-	let year =  fnSettingDate === 'y' ? today.getFullYear() +  fnSettingDateNum : today.getFullYear() ; // 년도
-	let month = fnSettingDate === 'm' ? today.getMonth() + 1 + fnSettingDateNum : today.getMonth() + 1 ;  // 월
-	let date =  fnSettingDate === 'd' ? today.getDate() +      fnSettingDateNum : today.getDate() ;  // 날짜
-	let returnDate = '';
+	var year =  fnSettingDate === 'y' ? today.getFullYear() +  fnSettingDateNum : today.getFullYear() ; // 년도
+	var month = fnSettingDate === 'm' ? today.getMonth() + 1 + fnSettingDateNum : today.getMonth() + 1 ;  // 월
+	var date =  fnSettingDate === 'd' ? today.getDate() +      fnSettingDateNum : today.getDate() ;  // 날짜
+	var returnDate = '';
 
 	if( fnDateFormet != '' && fnDateFormet ){
 		returnDate = year + fnDateFormet + month + fnDateFormet + date;
@@ -374,9 +374,9 @@ dateSet.getNextDate = ( fnSettingDate , fnSettingDateNum , fnDateFormet ) => {
 	else{ returnDate = year + month + date }
 }
 
-let viewName = '';
-let urlData;
-let urlHtmlData;
+var viewName = '';
+var urlData;
+var urlHtmlData;
 function refreshView( fnUrlMapSelect ){
 	
 	// 정상 호출 아닐시 settingChk 함수에서 멈춘다.

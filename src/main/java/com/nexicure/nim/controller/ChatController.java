@@ -2,7 +2,9 @@ package com.nexicure.nim.controller;
 
 import java.io.Console;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,13 +18,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,6 +43,7 @@ import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.nexicure.fileUtil.UploadFileUtils;
 import com.nexicure.nim.services.nexiChatService;
 import com.nexicure.nim.services.testService;
 
@@ -84,22 +92,27 @@ public class ChatController {
 				String[] fileExtention = originFileName.split("\\.");
 				
 				System.out.println("originFileName  >>>:  " + file[i].getOriginalFilename());
-				//System.out.println(fileExtention[fileExtention.length]);
 				System.out.println(fileExtention.toString());
+			
 				int leng = fileExtention.length-1;
+				
 				System.out.println(leng);
 				System.out.println("fileExtention  >>>:  " + fileExtention[leng]);
 				
 				idate = dateFormat.format(new Date());
 				tempFileName = idate+"_"+i+"."+fileExtention[leng];	
 				
+			//	uploadFile = UploadFileUtils.fileUpload(tempFileName);
+				
 				File uploadFile = new File(filePath, tempFileName);
 				
 				file[i].transferTo(uploadFile);	
 				
+				String thumbImg = UploadFileUtils.makeThumbnail(filePath, tempFileName, uploadFile);
 				fileMap.put("tempFileName", tempFileName);
 				fileMap.put("originFileName", originFileName);
 				fileMap.put("idate", idate);
+	
 				
 				fileList.add(fileMap);
 			}
@@ -115,6 +128,7 @@ public class ChatController {
 		}	
 		  
 	}
+	
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	@ResponseBody

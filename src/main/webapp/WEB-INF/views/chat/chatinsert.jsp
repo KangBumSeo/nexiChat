@@ -245,7 +245,8 @@ table.type08 td {
 			console.log("selOption >>>>> : " + selOption);
 
 			console.log("sessioinId :::::" + sessionId);
-			var param = {'id' : sessionId}
+			var param = { "key" : 'I', "id" : sessionId};
+			//var param = {'id' : sessionId}
 
 			var userReturn = chatAjax('/userSelect', param, 'post');
 			console.log(userReturn);
@@ -255,17 +256,18 @@ table.type08 td {
 		 		
 				chatTypeHtml(sessionId, 'chat', 'Y', userReturn, 'O');
 				
-				var sel = enterSel('userSearch', 'U', 'userSelect', sessionId);
-				console.log("sel >>>>>>>>: " + sel);
-				if(sel.length != 0) {
-					$("#pvHtml").remove();
-					chatTypeHtml(sessionId, 'chat', 'N', sel, 'O');
-				} 
+				var sel = enterSel('userSearch', 'I', 'chat');
+	 			enterSel.setAjaxUrl('userSelect');
+	 			enterSel.setChatHtml('chatY');
+	 			enterSel.setSession(sessionId);
+	 			enterSel.setChatType('O');
+				
+
 	 		 }else if(selOption === 'private'){
 	 			chatTypeHtml(sessionId, 'chat', 'N', userReturn, 'C');
 
 	 			
-	 			var sel = enterSel('userSearch', 'U', 'chat');
+	 			var sel = enterSel('userSearch', 'I', 'chat');
 	 			enterSel.setAjaxUrl('userSelect');
 	 			enterSel.setChatHtml('chatY');
 	 			enterSel.setSession(sessionId);
@@ -293,12 +295,13 @@ table.type08 td {
 <body>
 
 
-<div class="chatting">
+<div class="chatting" style="padding: 3% 12%;">
 		
 	<div class="chatInTable" id="chat">
 		<div class="chat content_header">채팅방 등록</div>
 		<div class="chat content_sub_header" id="aaa" style="padding:10px;">
-			<div class="selectDiv" style="text-align: center;"> 
+			<div style="float: left;padding: 0px 10px 0px 230px;">채팅방 등록 옵션</div>
+			<div class="selectDiv" "style="float: left; padding: 0px 230px 0px 10px;"> 
 				<select id="optionSelect">
 					<option value="">선택</option>
 					<option value="public">공개 채팅방</option>

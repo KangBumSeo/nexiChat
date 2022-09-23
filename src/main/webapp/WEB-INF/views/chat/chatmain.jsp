@@ -100,12 +100,12 @@
 
 					if (value === "") {
 						alert("검색할 내용을 입력하세요!");
-						$("#searchSel").focus();
+						//$("#searchSel").focus();
 						return;
 					}
 
 					$('#chat_data').empty();
-					var cParam = { "key" : key, "startdate" : startDate, "enddate" : endDate};
+					var cParam = { "key" : idate, "startdate" : startDate, "enddate" : endDate};
 					var test = chatAjax('/chatselect', cParam ,'post');
 					console.log(test);
 
@@ -115,7 +115,7 @@
 					
 					if (value === "") {
 						alert("검색할 내용을 입력하세요!");
-						$("#searchSel").focus();
+						//$("#searchSel").focus();
 						return;
 					}
 
@@ -139,12 +139,12 @@
 
 				if (value === "") {
 					alert("검색할 내용을 입력하세요!");
-					$("#searchSel").focus();
+					//$("#searchSel").focus();
 					return;
 				}
 
 				$('#chat_data').empty();
-				var cParam = { "key" : key, "startdate" : startDate, "enddate" : endDate};
+				var cParam = { "key" : idate, "startdate" : startDate, "enddate" : endDate};
 				var test = chatAjax('/chatselect', cParam ,'post');
 				console.log(test);
 
@@ -154,7 +154,7 @@
 				
 				if (value === "") {
 					alert("검색할 내용을 입력하세요!");
-					$("#searchSel").focus();
+					//$("#searchSel").focus();
 					return;
 				}
 

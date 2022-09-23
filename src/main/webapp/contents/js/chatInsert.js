@@ -46,7 +46,7 @@ function  chatTypeHtml ( sessionId, targetId, type_yn  , userReturn , chatType){
 					pvHtml += '			<input type="button" id="userSubmit" value="만들기" style="height: 25px; margin: 5px 0px;">';
 				}
 				else if ( chatType === 'U'){
-					pvHtml += '			<input type="button" id="userAddSubmit" value="userAdd" style="height: 25px; margin: 5px 0px;">';
+					pvHtml += '			<input type="button" id="userAddSubmit" value="추가" style="height: 25px; margin: 5px 0px;">';
 				}
 				pvHtml += '		</div>';				
 				pvHtml += '</div>';
@@ -171,24 +171,37 @@ function buttonSel(chatType) {
 	
 	
 	$("#userAddSubmit").off().click(function(e){
-		var iParam = [];
+		console.log("chatSeq======================");
+		console.log(chatSeq);
+
+		var iParam = {};
+		var targetParam = [];
 
 		var chkTarget = $('#pvbodyChk').find('.userClass');
 	
 		$.each( chkTarget , function(i,v){
 			var userIdDiv = $('#'+v.id).text().trim();
 			console.log(	userIdDiv  );
-			iParam.push(userIdDiv);
+			targetParam.push(userIdDiv);
 		});
+		iParam["guestid"] = targetParam;
+		iParam["chatseq"] = chatSeq;
 		console.log(iParam)
-		var insertResult = false;//chatAjax('/chatinsertdata', iParam, 'post');
+		
+		var chkUser = $(':checkbox:checked');
+		if(chkUser.length === 0) {
+			alert("추가할 사용자를 선택하세요");
+			return;
+		}
+		
+		var insertResult = chatAjax('/chatinsertdata', iParam, 'post');
 
 		if(insertResult) {
-			alert("채팅방이 생성되었습니다.");
+			alert("사용자가 추가되었습니다.");
 			console.log(insertResult);
 			location.href = "/";
 		}else{
-			alert("채팅방이 생성되지 않았습니다.");
+			alert("사용자가 추가되지 않았습니다.");
 			return;
 		}
 		
@@ -209,7 +222,7 @@ function buttonSel(chatType) {
 		
 		console.log(subject);
 		var chkUser = $(':checkbox:checked');
-		if(chkUser.length === 0) {
+		if(chatType === 'C' && chkUser.length === 0) {
 			alert("추가할 사용자를 선택하세요");
 			return;
 		}
@@ -279,7 +292,7 @@ function enterSel (searchText, key ,targetId  ) {
 			
 			if (value === "") {
 				alert("검색할 내용을 입력하세요!");
-				$("#"+searchText).focus();
+				//$("#"+searchText).focus();
 				return;
 			}
 

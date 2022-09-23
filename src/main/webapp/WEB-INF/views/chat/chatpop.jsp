@@ -22,13 +22,21 @@
 	//history.replaceState({}, null, location.pathname);
 //	history.pushState(null, null, '/');
 
-	var chatSeq = '${chatSeq}';
-	var chatTname = '${chatTname}';
-	var chatUserid = '${chatUserid}'
-	var tableName = chatTname+chatUserid
+	// table 이력 select
 	var sessionId = '<%= sessionId%>';
+	var chatSeq = '${chatSeq}';
+	
+	var param = {"key":"seq", "seq":chatSeq}
+	var returnTableData = chatAjax('/chatselect', param, 'post');
+
+	console.log(returnTableData);
+	var chatTname = returnTableData[0].SUBJECT;
+	var chatUserid = returnTableData[0].USERID;
+	var tableName = returnTableData[0].TABLENAME;
+	var status =  returnTableData[0].STATUS;
 
 	$(document).ready(function(){
+		//채팅방 대화 select
 		var sParam = {"tableName":tableName, "fileTableName":tableName+'_file'}
 		var returnConv = chatAjax('/chatConvSel', sParam, 'post');
 		//$("#chat_main").scrollTop($("#chat_main")[0].scrollHeight);
@@ -420,7 +428,7 @@
 
 		var fileReturn = fileAjax(fileUrl, formData);
 		console.log(fileReturn);
-	
+
 		
 		return fileReturn;
 	};
@@ -454,6 +462,8 @@
 				console.log("success");
 				console.log(result);
 				successResult = result;
+					
+				
 			},
 			error: function(request, status, error){
 				console.log("status : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
@@ -489,8 +499,9 @@
 	   }
 layerOpen.in = function( id , chatSeq ){
 	$("#"+id).on("click", function(){
-		$('#chatPopTitle').text('Chat User Adder');
-	var param = {'id' : sessionId}
+		$('#chatPopTitle').text('채팅 멤버 추가');
+//	var param = {'id' : sessionId}
+	var param = { "key" : 'P', "chatSeq" : chatSeq};
 	var userData = chatAjax('/userSelect', param, 'post');
 	$("#SelPop").show();
 	$('#memSelClose').show();
@@ -522,7 +533,7 @@ layerOpen.sel = function(id,chatSeq){
 		$('#SelPop').css('height','200px');
         param = {"chatSeq":chatSeq}
          
-		$('#chatPopTitle').text('Char Member');
+		$('#chatPopTitle').text('채팅 멤버');
          var userResult = chatAjax("/userChattable", param, 'post');
 	         
          if( userResult ) {
@@ -530,23 +541,28 @@ layerOpen.sel = function(id,chatSeq){
             $.each(userResult, function(i,v){
                var memId = v.GUESTID;
 			   var index = i+1;
+			   var superUser = v.SUPERUSER
+			   var superId = '멤버';
 			   if( memId != '' && memId != null ) {
-               html += '<div id="index" style="float: left; width: 50%;">'+index+'</div>';
-               html += '<div id="memId" style="float: left; width: 50%;">'+memId+'</div>';      
-			   }
+	               html += '<div id="index" style="float: left; width: 30%;">'+index+'</div>';
+	               html += '<div id="memId" style="float: left; width: 40%;">'+memId+'</div>';
+
+	               if (superUser === 'Y') {		var superId = "방장";		}
+	               	html += '<div id="memId" style="float: left; width: 30%;">'+superId+'</div>';      
+				}
             });
             html += '</div>';
             $("#memberchat").append(html);
          }     
 
-         $("#"+id).on("mouseout", function(){
+          $("#"+id).on("mouseout", function(){
 	         //$("#userList").remove();
 	         $("#SelPop").hide();
 	         $("#layerPop").hide();
 	         $("#layerPop").val("N");
 	         $("#userList").remove();
 	         $("#pvHtml").remove();
-	      });
+	      }); 
 	          
     });
 }	

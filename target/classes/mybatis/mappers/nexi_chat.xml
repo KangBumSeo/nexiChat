@@ -89,6 +89,9 @@
 				and SUBJECT = #{subject}
 				and USERID = #{userid}
 			</when>
+			<when test= "key == 'Seq'">
+				and SEQ = #{value, jdbcType=VARCHAR}
+			</when>
 			<otherwise>
 				AND ${key} LIKE '%' || #{value, jdbcType=VARCHAR} || '%' 
 			</otherwise>
@@ -303,14 +306,24 @@
 	</insert>
 	
 	<select id="userSelect" parameterType="HashMap" resultType="HashMap">
+	
 	SELECT 
-			  USERID
-			, DELYN
-	FROM NEXI_SIGNUP
-	WHERE USERID NOT IN #{id, jdbcType=VARCHAR}
-		<if test= 'key !=null and key == "U" and value !=null and value != "" '>
-			AND USERID LIKE '%' || #{value, jdbcType=VARCHAR} || '%'
-		</if>
+		  	NS.USERID
+		  ,	NS.DELYN
+		  ,	NCU.CHATSEQ
+	FROM 	NEXI_SIGNUP NS 
+	LEFT OUTER JOIN 
+			(SELECT * FROM NEXI_CHAT_USER WHERE CHATSEQ = #{chatSeq, jdbcType=VARCHAR}) NCU
+	ON 		NS.USERID = NCU.GUESTID
+	WHERE USERID LIKE '%' || #{value, jdbcType=VARCHAR} || '%'
+	<choose>
+		<when test='key == "I" and key != null'>
+			AND USERID != #{id, jdbcType=VARCHAR}
+		</when>
+		<when test='key == "P" and key != null'>
+			AND NCU.CHATSEQ IS NULL	
+		</when>
+	</choose>
 	</select>
 	
 	
@@ -368,7 +381,7 @@
 			  , NC.IDATE
 		FROM NEXI_CHAT NC, NEXI_CHAT_USER NCU
 		WHERE NCU.GUESTID = #{userid, jdbcType=VARCHAR}
-		AND NC.SEQ = NCU.SEQ
+		AND NC.SEQ = NCU.CHATSEQ
 		ORDER BY TO_NUMBER(NC.SEQ) DESC
 	
 	</select>
@@ -376,21 +389,22 @@
 	
 	<select id="userChattableChk" parameterType="HashMap" resultType="HashMap">
 	
-		SELECT
-				 SEQ
-				,CHATSEQ
-				,GUESTID
-				,DELYN
-				,CUTOFF
-		FROM NEXI_CHAT_USER
-		WHERE CHATSEQ = #{chatSeq, jdbcType=VARCHAR}
-		AND DELYN = 'N'
+		SELECT 
+				 NCU.SEQ
+				,NCU.CHATSEQ
+				,NCU.GUESTID
+				,NCU.DELYN
+				,NCU.CUTOFF
+				,DECODE(NVL(NC.USERID, 'N'), 'N', 'N', 'Y') SUPERUSER
+		FROM 	NEXI_CHAT_USER NCU LEFT JOIN NEXI_CHAT NC
+		ON 		NCU.GUESTID = NC.USERID
+		AND 	NCU.CHATSEQ = NC.SEQ
+		WHERE 	CHATSEQ = #{chatSeq, jdbcType=VARCHAR}
+		AND 	DELYN = 'N'
 		<if test ="guestid != null and guestid != '' ">
-		AND GUESTID = #{userid, jdbcType=VARCHAR}
-		<!-- 	AND SEQ = #{seq, jdbcType=VARCHAR}  -->
+		AND 	GUESTID = #{userid, jdbcType=VARCHAR}
 		</if>
-	
-	
+		ORDER BY SUPERUSER DESC, NCU.SEQ DESC
 	</select>
 		
 	
